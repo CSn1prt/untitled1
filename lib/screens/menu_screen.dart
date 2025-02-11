@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('홈 화면'),
+        title: const Text('임시 메뉴 화면'),
       ),
       body: Center(
         child: Column( // Use Column to hold multiple children
@@ -48,6 +48,17 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: const Text('설정'),
+            ),
+            const SizedBox(height: 16), // Now this is fine
+            ElevatedButton(
+              onPressed: () {
+                print("setting pressed");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                );
+              },
+              child: const Text('고객 센터'),
             ),
           ],
         ),

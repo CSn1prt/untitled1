@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:untitled1/screens/webview_screen.dart';
+import 'menu_screen.dart';
+import 'navigation_bar_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,8 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to another screen after successful login
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
+
     }
   }
 
@@ -75,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '이곳에 비밀번호를 입력해 주세요';
+                    return '이곳에 비밀번호를 입력해 보시라이';
                   }
                   if (value.length < 6) {
-                    return '비밀번호는 6자리 이상입니다';
+                    return '비밀번호는 4자리 이상입니다';
                   }
                   return null;
                 },

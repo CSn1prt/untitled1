@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import '../screens/webview_screen.dart';
-import 'home_screen.dart';
+import 'menu_screen.dart';
 import 'settings_screen.dart';
 import 'app_bar_screen.dart';
 import 'loading_screen.dart';
@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const WebViewScreen(),
+    const WebViewScreen(url: 'https://b2b.exona.kr:11101/e62f88725a674bee953796feb3222d52'),
     const SettingsScreen(),
   ];
 
@@ -63,12 +63,12 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
+            icon: Icon(Icons.menu),
+            label: '메뉴',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: '로딩 중',
+            icon: Icon(Icons.home),
+            label: '메인화면',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

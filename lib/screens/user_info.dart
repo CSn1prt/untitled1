@@ -24,61 +24,65 @@ class UserInfoScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Profile Picture
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(profileImageUrl),
-            ),
-            const SizedBox(height: 20),
-
-            // User Name
-            Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+      body: Center(  // Center 위젯 추가
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Column을 내용 크기에 맞춤
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Profile Picture
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(profileImageUrl),
               ),
-            ),
-            const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
-            // User Email
-            Text(
-              userEmail,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              // User Name
+              Text(
+                userName,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
-            // Edit Profile Button
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to edit profile screen
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen()));
-              },
-              child: const Text('프로필 편집'),
-            ),
-            const SizedBox(height: 10),
+              // User Email
+              Text(
+                userEmail,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 20),
 
-            // Logout Button
-            OutlinedButton(
-              onPressed: () {
-                // Handle logout logic
-                _showLogoutConfirmationDialog(context);
-              },
-              child: const Text('로그아웃'),
-            ),
-          ],
+              // Edit Profile Button
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to edit profile screen
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen()));
+                },
+                child: const Text('프로필 편집'),
+              ),
+              const SizedBox(height: 10),
+
+              // Logout Button
+              OutlinedButton(
+                onPressed: () {
+                  // Handle logout logic
+                  _showLogoutConfirmationDialog(context);
+                },
+                child: const Text('로그아웃'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   // Helper function to show a logout confirmation dialog
   void _showLogoutConfirmationDialog(BuildContext context) {

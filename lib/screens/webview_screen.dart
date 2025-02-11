@@ -2,7 +2,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/material.dart';
 
 class WebViewScreen extends StatefulWidget {
-  const WebViewScreen({Key? key}) : super(key: key);
+  final String url;
+  const WebViewScreen({super.key, required this.url});
 
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
@@ -20,22 +21,16 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
     _controller = WebViewController.fromPlatformCreationParams(params)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://b2b.exona.kr:11101/Main'));
-
+      ..loadRequest(Uri.parse(widget.url)); // ✅ Dynamically load URL
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Web View'),
+        title: const Text('웹페이지 보기'),
       ),
       body: WebViewWidget(controller: _controller),
     );
   }
 }
-
-
-
-
-
