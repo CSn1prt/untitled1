@@ -29,6 +29,7 @@ class UserRepository {
     return _userSettings!;
   }
 
+  //블루투스 등 기기 접근 권한 관리
   Future<void> _requestBluetoothPermission() async {
     final status = await Permission.bluetooth.request();
 
@@ -41,7 +42,7 @@ class UserRepository {
       final newSettings = UserSettings(
         theme: _userSettings!.theme,
         notificationsEnabled: _userSettings!.notificationsEnabled,
-        bluetoothEnabled: bluetoothEnabled,
+        //bluetoothEnabled: bluetoothEnabled,
       );
       await saveUserSettings(newSettings);
     }

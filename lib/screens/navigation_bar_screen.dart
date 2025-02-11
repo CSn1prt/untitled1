@@ -22,13 +22,14 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+
     const WebViewScreen(url: 'https://b2b.exona.kr:11101/e62f88725a674bee953796feb3222d52'),
+    const HomeScreen(),
     const SettingsScreen(),
   ];
 
   // Titles for each tab
-  final List<String> _titles = ['홈', '웹뷰', '설정'];
+  final List<String> _titles = ['메인', '메뉴', '설정'];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -63,13 +64,15 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: '메뉴',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: '메인화면',
           ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: '메뉴',
+          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: '설정',

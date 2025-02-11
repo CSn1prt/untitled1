@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'login_screen.dart';
 
 class UserInfoScreen extends StatelessWidget {
   // 사용자 예시 (백엔드 연결 예정)
@@ -24,11 +29,10 @@ class UserInfoScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(  // Center 위젯 추가
+      body: Center( // Center widget is now correctly wrapping the Column
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min, // Column을 내용 크기에 맞춤
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Profile Picture
@@ -82,8 +86,6 @@ class UserInfoScreen extends StatelessWidget {
       ),
     );
   }
-
-
   // Helper function to show a logout confirmation dialog
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
@@ -104,7 +106,11 @@ class UserInfoScreen extends StatelessWidget {
                 // Perform logout logic here
                 // For example, clear user session and navigate to login screen
                 Navigator.pop(context); // Close the dialog
-                Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginScreen())
+                );// Navigate to login screen)
+
               },
               child: const Text('로그아웃'),
             ),

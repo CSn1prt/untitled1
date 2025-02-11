@@ -95,15 +95,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SwitchListTile(
                   title: const Text('기기 접근 권한'),
                   value: _userSettings!.notificationsEnabled,
-                  onChanged: (value)  {
+                  onChanged: (value) {
                     final newSettings = UserSettings(
                       theme: _userSettings!.theme,
-                          bluetoothEnabled: value,
+                      notificationsEnabled: value,
                     );
                     _saveUserSettings(newSettings);
-                  }
-
-
+                  },
                 ),
                 TextButton(
                   onPressed: () {

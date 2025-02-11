@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '이곳에 비밀번호를 입력해 보시라이';
+                    return '이곳에 비밀번호를 입력해 보시요';
                   }
                   if (value.length < 6) {
                     return '비밀번호는 4자리 이상입니다';
