@@ -28,7 +28,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('웹페이지 보기'),
+        title: const Text('임시 웹뷰 화면'),
       ),
       body: WebViewWidget(controller: _controller),
     );

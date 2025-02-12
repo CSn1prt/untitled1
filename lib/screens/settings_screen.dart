@@ -103,6 +103,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _saveUserSettings(newSettings);
                   },
                 ),
+                SwitchListTile(
+                  title: const Text('자동 로그아웃 설정'),
+                  value: false, // You no longer need to bind this to a setting
+                  onChanged: (_) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const UserInfoScreen()),
+                    );
+                  },
+                ),
                 TextButton(
                   onPressed: () {
                     // 웹페이지로 이동

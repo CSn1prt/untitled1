@@ -27,7 +27,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5, // 검색창 크기 조절
                 child: SearchBar(
-                  hintText: '검색어를 입력해 주세요',
+                  hintText: '검색하기',
                   leading: const Icon(Icons.search),
                   surfaceTintColor: MaterialStateProperty.all<Color>(Colors.transparent), // 그림자 제거
                   shadowColor: MaterialStateProperty.all<Color>(Colors.transparent), // 추가적인 그림자 제거

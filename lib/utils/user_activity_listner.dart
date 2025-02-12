@@ -7,7 +7,13 @@ import '../screens/login_screen.dart';
 /// ✅ 전역적으로 사용자 입력을 감지하고 자동 로그아웃을 처리하는 위젯
 class UserActivityListener extends StatefulWidget {
   final Widget child;
-  const UserActivityListener({Key? key, required this.child}) : super(key: key);
+  final bool enableListener; // Listener 켜기/끄기
+
+  const UserActivityListener({
+    Key? key,
+    required this.child,
+    this.enableListener = true,
+  }) : super(key: key);
 
   @override
   _UserActivityListenerState createState() => _UserActivityListenerState();
@@ -20,12 +26,15 @@ class _UserActivityListenerState extends State<UserActivityListener> {
   @override
   void initState() {
     super.initState();
-    _resetLogoutTimer();
-    _startListeningForUserActivity();
+    if (widget.enableListener) {
+      _resetLogoutTimer();
+      _startListeningForUserActivity();
+    }
   }
 
   /// ✅ 타이머를 리셋하여 자동 로그아웃을 연장
   Future<void> _resetLogoutTimer() async {
+    if (!widget.enableListener) return;
     _logoutTimer?.cancel();
     _logoutTimer = Timer(timeoutDuration, _handleAutoLogout);
   }
@@ -42,13 +51,17 @@ class _UserActivityListenerState extends State<UserActivityListener> {
 
   /// ✅ 사용자 입력 감지 (터치, 키보드 입력, 앱 복귀)
   void _startListeningForUserActivity() {
+    if (!widget.enableListener) return;
+
     WidgetsBinding.instance.addObserver(
       LifecycleEventHandler(resumeCallBack: _resetLogoutTimer),
     );
 
-    // 터치 감지 (모든 화면에서 감지)
+    // ⚠️ 키보드 이벤트 감지는 제외 (UI 입력 문제 해결)
     SystemChannels.textInput.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'TextInput.show') {
+        debugPrint("Keyboard opened - Not resetting logout timer");
+      } else {
         _resetLogoutTimer();
       }
       return null;
@@ -58,11 +71,14 @@ class _UserActivityListenerState extends State<UserActivityListener> {
   @override
   void dispose() {
     _logoutTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(LifecycleEventHandler());
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.enableListener) return widget.child;
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: _resetLogoutTimer, // 터치 감지

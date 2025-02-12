@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
-              child: const Text('로그인'),
+              child: const Text('로그아웃'),
             ),
             const SizedBox(height: 16), // Now this is fine
             ElevatedButton(
