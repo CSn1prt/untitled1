@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('임시 메뉴 화면'),
+        title: const Text('메뉴'),
       ),
       body: Center(
         child: Column( // Use Column to hold multiple children

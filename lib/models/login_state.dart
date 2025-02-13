@@ -2,55 +2,41 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginStateManager {
   static const String _isLoggedInKey = 'isLoggedIn';
+  static const String _userEmailKey = 'userEmail';
+  static const String _userNameKey = 'userName';
 
-  // Private constructor to prevent direct instantiation
   LoginStateManager._();
-
-  // Static instance for singleton pattern
   static final LoginStateManager _instance = LoginStateManager._();
-
-  // Factory constructor to return the singleton instance
   factory LoginStateManager() => _instance;
 
-  // Method to check if the user is logged in
+  // 자동 로그인 여부 확인
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_isLoggedInKey) ?? false;
   }
 
-  // Method to set the login state
-  Future<void> setLoggedIn(bool isLoggedIn) async {
+  // 저장된 이메일 가져오기
+  Future<String?> getUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_userEmailKey);
+  }
+
+  // 로그인 정보 저장
+  Future<void> setLoggedIn(bool isLoggedIn, {String? email}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_isLoggedInKey, isLoggedIn);
+    if (email != null) {
+      await prefs.setString(_userEmailKey, email);
+    } else {
+      await prefs.remove(_userEmailKey);
+    }
+  }
+
+  // 로그아웃 시 정보 삭제
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_isLoggedInKey);
+    await prefs.remove(_userEmailKey);
+    await prefs.remove(_userNameKey);
   }
 }
-
-// Example Usage (in a Widget or other part of your app):
-// Import the file where LoginStateManager is defined.
-// import 'login_state_manager.dart';
-
-// ... inside a Widget or other class ...
-
-// Example of checking login state on app start:
-// void checkLoginState() async {
-//   final isLoggedIn = await LoginStateManager().isLoggedIn();
-//   if (isLoggedIn) {
-//     // Navigate to the main screen
-//     print('User is logged in');
-//   } else {
-//     // Navigate to the login screen
-//     print('User is not logged in');
-//   }
-// }
-
-// Example of setting login state on successful login:
-// void onLoginSuccess() async {
-//   await LoginStateManager().setLoggedIn(true);
-//   print('User logged in successfully');
-// }
-
-// Example of setting login state on logout:
-// void onLogout() async {
-//   await LoginStateManager().setLoggedIn(false);
-//   print('User logged out');
-// }

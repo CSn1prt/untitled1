@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/webview_screen.dart';
-import 'menu_screen.dart';
-import 'navigation_bar_screen.dart';
+import '../models/login_state.dart';
+import 'package:untitled1/screens/navigation_bar_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,41 +11,36 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>(); // Key for form validation
-  final _emailController = TextEditingController(); // Controller for email field
-  final _passwordController = TextEditingController(); // Controller for password field
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
 
-  bool _isLoading = false; // To show a loading indicator during login
-
-  // Simulate a login process
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true; // Show loading indicator
+        _isLoading = true;
       });
 
-      // Simulate a network call (e.g., API request)
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2)); // 가짜 로그인 처리
+
+      await LoginStateManager().setLoggedIn(true, email: _emailController.text); // 자동 로그인 정보 저장
 
       setState(() {
-        _isLoading = false; // Hide loading indicator
+        _isLoading = false;
       });
 
-      // Navigate to another screen after successful login
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('로그인 화면'),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -54,41 +49,27 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: '이메일',
-                  hintText: '여기에 이메일 주소를 입력해 주세요',
-                ),
+                decoration: const InputDecoration(labelText: '이메일'),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '이메일';
-                  }
-                  if (!value.contains('@')) {
-                    return '정상적인 이메일 주소를 입력해 주세요';
-                  }
+                  if (value == null || value.isEmpty) return '이메일을 입력해 주세요';
+                  if (!value.contains('@')) return '유효한 이메일을 입력하세요';
                   return null;
                 },
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
-                obscureText: true, // Hide password
-                decoration: const InputDecoration(
-                  labelText: '패스워드',
-                  hintText: '정확한 비밀번호를 입력해주세요',
-                ),
+                obscureText: true,
+                decoration: const InputDecoration(labelText: '비밀번호'),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '이곳에 비밀번호를 입력해 보시요';
-                  }
-                  if (value.length < 6) {
-                    return '비밀번호는 4자리 이상입니다';
-                  }
+                  if (value == null || value.isEmpty) return '비밀번호를 입력해 주세요';
+                  if (value.length < 6) return '비밀번호는 6자리 이상이어야 합니다';
                   return null;
                 },
               ),
               const SizedBox(height: 24),
               _isLoading
-                  ? const CircularProgressIndicator() // Show loading indicator
+                  ? const CircularProgressIndicator()
                   : ElevatedButton(
                 onPressed: _login,
                 child: const Text('로그인'),

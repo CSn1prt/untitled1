@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
 
-    const WebViewScreen(url: 'https://b2b.exona.kr:11101/Main'),
+    const WebViewScreen(url: 'https:www.google.com'),
     const HomeScreen(),
     const SettingsScreen(),
   ];
