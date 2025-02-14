@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   const CustomAppBar({Key? key, required this.title}) : super(key: key);
@@ -13,6 +12,15 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  bool _isSearchExpanded = false;
+  final TextEditingController _searchController = TextEditingController();
+
+  void _toggleSearch() {
+    setState(() {
+      _isSearchExpanded = !_isSearchExpanded;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -21,26 +29,33 @@ class _CustomAppBarState extends State<CustomAppBar> {
         children: [
           Row(
             children: [
-      Icon(Icons.question_mark, size: 28, color: Colors.black),  // 🔥 아이콘으로 대체
-
-              const SizedBox(width: 10), // 로고와 검색창 사이 간격
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5, // 검색창 크기 조절
-                child: SearchBar(
-                  hintText: '검색하기',
-                  leading: const Icon(Icons.search),
-                  surfaceTintColor: MaterialStateProperty.all<Color>(Colors.transparent), // 그림자 제거
-                  shadowColor: MaterialStateProperty.all<Color>(Colors.transparent), // 추가적인 그림자 제거
-                  onTap: () {},
-                  onChanged: (value) {},
-                ),
+              IconButton(
+                icon: Icon(_isSearchExpanded ? Icons.close : Icons.search),
+                onPressed: _toggleSearch,
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: _isSearchExpanded
+                    ? MediaQuery.of(context).size.width * 0.6
+                    : 0,
+                curve: Curves.easeInOut,
+                child: _isSearchExpanded
+                    ? TextField(
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    hintText: '검색하기',
+                    border: InputBorder.none,
+                  ),
+                  autofocus: true,
+                )
+                    : const SizedBox(),
               ),
             ],
           ),
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-              // Handle notification icon tap
+              // 알림 아이콘 동작 추가
             },
           ),
         ],

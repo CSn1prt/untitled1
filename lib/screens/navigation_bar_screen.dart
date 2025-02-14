@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
 
-    const WebViewScreen(url: 'https:www.google.com'),
+    const WebViewScreen(url: 'http://210.121.223.5:11101/'),
     const HomeScreen(),
     const SettingsScreen(),
   ];
