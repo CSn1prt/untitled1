@@ -62,3 +62,34 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     );
   }
 }
+
+// Helper function to show a logout confirmation dialog
+void _showLogoutConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('로그아웃'),
+        content: const Text('정말로 로그아웃 하시겠습니까?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Perform logout logic here
+              // For example, clear user session and navigate to login screen
+              Navigator.pop(context); // Close the dialog
+              Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+            },
+            child: const Text('로그아웃'),
+          ),
+        ],
+      );
+    },
+  );
+}
+}

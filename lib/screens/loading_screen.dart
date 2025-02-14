@@ -7,7 +7,7 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Loading Screen'),
+        title: const Text(''),
       ),
       body: const Center(
         child: CircularProgressIndicator(), // Show a loading spinner

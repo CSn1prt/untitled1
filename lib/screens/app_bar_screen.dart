@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String title;
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+  const CustomAppBar({Key? key}) : super(key: key);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -24,42 +23,43 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(_isSearchExpanded ? Icons.close : Icons.search),
-                onPressed: _toggleSearch,
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: _isSearchExpanded
-                    ? MediaQuery.of(context).size.width * 0.6
-                    : 0,
-                curve: Curves.easeInOut,
-                child: _isSearchExpanded
-                    ? TextField(
-                  controller: _searchController,
-                  decoration: const InputDecoration(
-                    hintText: '검색하기',
-                    border: InputBorder.none,
-                  ),
-                  autofocus: true,
-                )
-                    : const SizedBox(),
-              ),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              // 알림 아이콘 동작 추가
-            },
-          ),
-        ],
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0), // 로고 아이콘 여백 조절
+        child: Image.asset(
+          'assets/images/resized_icon.png',  // 로고 이미지 경로
+          width: 28,  // 추천 크기
+          height: 28, // 추천 크기
+          fit: BoxFit.contain, // 크기 조절
+        ),
       ),
+      title: _isSearchExpanded
+          ? AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: MediaQuery.of(context).size.width * 0.6,
+        curve: Curves.easeInOut,
+        child: TextField(
+          controller: _searchController,
+          decoration: const InputDecoration(
+            hintText: '검색하기',
+            border: InputBorder.none,
+          ),
+          autofocus: true,
+        ),
+      )
+          : null, // 기본 제목 제거
+
+      actions: [
+        IconButton(
+          icon: Icon(_isSearchExpanded ? Icons.close : Icons.search),
+          onPressed: _toggleSearch,
+        ),
+        IconButton(
+          icon: const Icon(Icons.notifications),
+          onPressed: () {
+            // 알림 아이콘 동작 추가
+          },
+        ),
+      ],
     );
   }
 }

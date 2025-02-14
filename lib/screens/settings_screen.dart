@@ -45,9 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     print('Building SettingsScreen');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('설정'),
-      ),
+
       body: FutureBuilder<UserSettings>(
         future: _userRepository.getUserSettings(),
         builder: (context, snapshot) {
@@ -59,10 +57,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _userSettings = snapshot.data;
             return ListView(
               children: [
-                SwitchListTile(
+                ListTile(
                   title: const Text('계정 정보'),
-                  value: false, // You no longer need to bind this to a setting
-                  onChanged: (_) {
+                 onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const UserInfoScreen()),
@@ -92,25 +89,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _saveUserSettings(newSettings);
                   },
                 ),
-                SwitchListTile(
+                ListTile(
                   title: const Text('기기 접근 권한'),
-                  value: _userSettings!.notificationsEnabled,
-                  onChanged: (value) {
-                    final newSettings = UserSettings(
-                      theme: _userSettings!.theme,
-                      notificationsEnabled: value,
-                    );
-                    _saveUserSettings(newSettings);
-                  },
-                ),
-                SwitchListTile(
-                  title: const Text('자동 로그아웃 설정'),
-                  value: false, // You no longer need to bind this to a setting
-                  onChanged: (_) {
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const UserInfoScreen()),
                     );
+                  },
+                ),
+                SwitchListTile(
+                  title: const Text('자동 로그아웃 설정'),
+                  value: _userSettings?.autoLogoutEnabled ?? false, // 실제 설정 값 사용
+                  onChanged: (value) {
+                    setState(() {
+                      _userSettings = UserSettings(
+                        theme: _userSettings!.theme,
+                        notificationsEnabled: _userSettings!.notificationsEnabled,
+                        autoLogoutEnabled: value, // 자동 로그아웃 설정 업데이트
+                      );
+
+
+                    }
+
+                    );
+                    _saveUserSettings(_userSettings!);
                   },
                 ),
                 TextButton(

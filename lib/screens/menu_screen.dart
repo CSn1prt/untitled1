@@ -11,54 +11,58 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('메뉴'),
-      ),
+
       body: Center(
         child: Column( // Use Column to hold multiple children
-          mainAxisAlignment: MainAxisAlignment.center, // Center the Column vertically
+          //mainAxisAlignment: MainAxisAlignment.center, // Center the Column vertically
           children: [
-            ElevatedButton(
-              onPressed: () {
+            ListTile(
+              title: const Text('로그아웃'),
+              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+              onTap: () {
+                // Navigate to the LoadingScreen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+            ),
+            const SizedBox(height: 16), // Now this is fine
+            ListTile(
+              title: const Text('알람 관리'),
+              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+              onTap: () {
                 // Navigate to the LoadingScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const LoadingScreen()),
                 );
               },
-              child: const Text('로딩 스크린'),
             ),
             const SizedBox(height: 16), // Now this is fine
-            ElevatedButton(
-              onPressed: () {
+
+            ListTile(
+              title: const Text('즐겨찾기'),
+              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+              onTap: () {
+                // Navigate to the LoadingScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
                 );
               },
-              child: const Text('로그아웃'),
             ),
             const SizedBox(height: 16), // Now this is fine
-            ElevatedButton(
-              onPressed: () {
-                print("setting pressed");
+            ListTile(
+              title: const Text('고객 센터'),
+              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+              onTap: () {
+                // Navigate to the LoadingScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
                 );
               },
-              child: const Text('설정'),
-            ),
-            const SizedBox(height: 16), // Now this is fine
-            ElevatedButton(
-              onPressed: () {
-                print("setting pressed");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
-                );
-              },
-              child: const Text('고객 센터'),
             ),
           ],
         ),

@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: _titles[_selectedIndex]), // Dynamic title
+      appBar: CustomAppBar(), // Dynamic title
       body: WillPopScope(
         onWillPop: () async {
           final isFirstRouteInCurrentTab =
