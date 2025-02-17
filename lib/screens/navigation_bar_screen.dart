@@ -5,6 +5,7 @@ import 'settings_screen.dart';
 import 'app_bar_screen.dart';
 import 'loading_screen.dart';
 import 'webview_screen.dart';
+import 'lower_navigation_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -33,9 +34,11 @@ class _MainScreenState extends State<MainScreen> {
   final List<String> _titles = ['메인', '메뉴', '설정'];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index < _screens.length) { // 잘못된 인덱스 방지
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -62,26 +65,9 @@ class _MainScreenState extends State<MainScreen> {
           }).toList(),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '메인화면',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: '메뉴',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '설정',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+      bottomNavigationBar: CustomBottomNavigationBar(
+      selectedIndex: _selectedIndex,
+      onItemTapped: _onItemTapped,
       ),
     );
   }

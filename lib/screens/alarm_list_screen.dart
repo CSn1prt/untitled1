@@ -3,6 +3,7 @@ import '../models/alarm.dart';
 import 'app_bar_screen.dart';
 import 'navigation_bar_screen.dart';
 
+
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
 
@@ -45,7 +46,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [],),
+
     );
   }
 }
