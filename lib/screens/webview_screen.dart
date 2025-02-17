@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../repositories/favorites_repository.dart';
@@ -14,89 +15,110 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   InAppWebViewController? _controller;
-  bool isLoading = true; // ✅ 로딩 상태 추가
+  bool isLoading = true;
+  bool isFavorite = false;
   final FavoritesRepository _favoritesRepository = FavoritesRepository();
-  //List<String> favorites = _favoritesRepository.getFavorites();
+
+  Future<bool> _onWillPop() async {
+    if (_controller != null) {
+      if (await _controller!.canGoBack()) {
+        _controller!.goBack();
+        return false;
+      }
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          String? url = (await _controller.getCurrentUrl()) as String?;
-          if (url != null) {
-            print('URL issss: $url');
-            bool isAlreadyFavorite = await _favoritesRepository.isFavorite(url);
-            //List<String> favorites = prefs.getStringList('favorites') ?? [];
-
-            // 이전 스낵바 숨기기
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            if (!isAlreadyFavorite) {
-
-              //favorites.add(url);
-              await _favoritesRepository.addFavorite(url);
-              //await prefs.setStringList('favorites', favorites);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('즐겨찾기에 추가되었습니다!')),
-              );
-            } else {
-              //await _favoritesRepository.addFavorite(url);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('이미 즐겨찾기에 있습니다.')),
-              );
-            }
-          }
-        },
-        child: Icon(Icons.bookmark),
-      ),
-
-
-      body: Stack(
-        children: [
-          InAppWebView(
-            initialUrlRequest: URLRequest(url: WebUri(widget.url)), // ✅ FIXED
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                javaScriptEnabled: true, // ✅ JavaScript 허용
-                userAgent: "Mozilla/5.0 (Linux; Android 10; SM-G973N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.92 Mobile Safari/537.36",
-              ),
-            ),
-            onWebViewCreated: (InAppWebViewController controller) {
-              _controller = controller;
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              if (await _controller?.canGoBack() ?? false) {
+                _controller?.goBack();
+              } else {
+                Navigator.of(context).pop();
+              }
             },
-            onLoadStart: (controller, url) {
-              setState(() {
-                isLoading = true;
-              });
-            },
-            onLoadStop: (controller, url) async {
-              setState(() {
-                isLoading = false;
-              });
-            },
-
           ),
-
-          // ✅ WebView가 로드 중일 때 추가적인 로딩 인디케이터 표시
-          if (isLoading)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                color: Colors.white.withOpacity(0.7),
-                child: Center(child: CircularProgressIndicator()),
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 60),
+          child: FloatingActionButton(
+            onPressed: () async {
+              String? url = (await _controller?.getUrl())?.toString();
+              if (url != null) {
+                bool isAlreadyFavorite = await _favoritesRepository.isFavorite(url);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                if (!isAlreadyFavorite) {
+                  await _favoritesRepository.addFavorite(url);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('즐겨찾기에 추가되었습니다!')),
+                  );
+                  setState(() {
+                    isFavorite = true;
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('이미 즐겨찾기에 있습니다.')),
+                  );
+                }
+              }
+            },
+            child: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_border),
+          ),
+        ),
+        body: Stack(
+          children: [
+            InAppWebView(
+              initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+              initialOptions: InAppWebViewGroupOptions(
+                crossPlatform: InAppWebViewOptions(
+                  javaScriptEnabled: true,
+                  userAgent: "Mozilla/5.0 (Linux; Android 10; SM-G973N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.92 Mobile Safari/537.36",
+                ),
               ),
+              onWebViewCreated: (controller) => _controller = controller,
+              onLoadStart: (controller, url) => setState(() => isLoading = true),
+              onLoadStop: (controller, url) => setState(() => isLoading = false),
+              onLoadError: (controller, url, code, message) => setState(() => isLoading = false),
             ),
-        ],
+            if (isLoading)
+              const FullScreenSplash(),
+          ],
+        ),
       ),
     );
   }
 }
 
-extension WebViewControllerExtensions on InAppWebViewController? {
-  Future<WebUri?> getCurrentUrl() async {
-    return this != null ? await this!.getUrl() : null;
+// 전체 화면 스플래시 위젯 추가
+class FullScreenSplash extends StatelessWidget {
+  const FullScreenSplash({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white, // 순수 흰색 배경
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 20),
+            Text(
+              '잠시만 기다려주세요...',
+              style: TextStyle(fontSize: 18, color: Colors.black),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

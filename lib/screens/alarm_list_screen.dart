@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/alarm.dart';
+import 'app_bar_screen.dart';
+import 'navigation_bar_screen.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("알람 목록")),
+      appBar: CustomAppBar(),
       body: ListView.builder(
         itemCount: alarms.length,
         itemBuilder: (context, index) {
@@ -43,6 +45,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
           );
         },
       ),
+      bottomNavigationBar: BottomNavigationBar(items: [],),
     );
   }
 }

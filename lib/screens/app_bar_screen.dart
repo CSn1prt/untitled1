@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'alarm_list_screen.dart';
+import 'navigation_bar_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key}) : super(key: key);
@@ -24,13 +26,22 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       leading: Padding(
-        padding: const EdgeInsets.all(8.0), // 로고 아이콘 여백 조절
+        padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+    onTap: () {
+    Navigator.of(context).pushReplacement(
+    MaterialPageRoute(
+    builder: (context) => MainScreen()
+    ),
+    );
+    },// 로고 아이콘 여백 조절
         child: Image.asset(
           'assets/images/resized_icon.png',  // 로고 이미지 경로
           width: 28,  // 추천 크기
           height: 28, // 추천 크기
           fit: BoxFit.contain, // 크기 조절
         ),
+      ),
       ),
       title: _isSearchExpanded
           ? AnimatedContainer(
@@ -56,7 +67,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
         IconButton(
           icon: const Icon(Icons.notifications),
           onPressed: () {
-            // 알림 아이콘 동작 추가
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                builder: (context) => AlarmListScreen()));// 알림 아이콘 동작 추가
           },
         ),
       ],
