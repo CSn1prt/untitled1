@@ -119,12 +119,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 TextButton(
                   onPressed: () {
                     // 웹페이지로 이동
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WebViewScreen(url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EB%B3%B4%ED%98%B8%EB%B2%95'),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const WebViewScreen(url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EB%B3%B4%ED%98%B8%EB%B2%95', onLoadingChanged: false,),
+                    //   ),
+                    // );
                   },
                   child: const Text(
                     '개인정보처리방침 보기',

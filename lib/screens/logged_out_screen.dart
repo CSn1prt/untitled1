@@ -23,10 +23,7 @@ class LoggedOutScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to the login screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
+                LoginScreen();
               },
               child: const Text('Log In'),
             ),

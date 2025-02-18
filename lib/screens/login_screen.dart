@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/screens/webview_screen.dart';
 import '../models/login_state.dart';
 import 'package:untitled1/screens/navigation_bar_screen.dart';
+import 'package:untitled1/screens/webview_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +16,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+
+  // 로딩 상태를 변경하는 콜백 함수
+  void _setLoadingState(bool isLoading) {
+    setState(() {
+      _isLoading = isLoading;
+    });
+  }
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
@@ -32,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
+        MaterialPageRoute(builder: (context) => WebViewScreen(url: 'http://210.121.223.5:11101/', onLoadingChanged: _setLoadingState)),
       );
     }
   }

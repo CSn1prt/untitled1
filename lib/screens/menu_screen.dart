@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/favorites_list_screen.dart';
 //import '../screens/settings_screen.dart';
 import 'settings_screen.dart';
 import 'loading_screen.dart';
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 // Navigate to the LoadingScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
+                  MaterialPageRoute(builder: (context) => FavoritesListScreen()),
                 );
               },
             ),

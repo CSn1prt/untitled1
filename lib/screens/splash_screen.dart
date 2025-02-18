@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white, // 배경색 설정
       body: Center(
         child: Image.asset(
-          'assets/images/__siteIcon__.png', // 지정한 로고 이미지
+          'assets/images/resized_icon.png', // 지정한 로고 이미지
           width: 150, // 원하는 크기로 조정
           height: 150,
           fit: BoxFit.contain,

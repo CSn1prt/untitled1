@@ -6,6 +6,7 @@ import 'app_bar_screen.dart';
 import 'loading_screen.dart';
 import 'webview_screen.dart';
 import 'lower_navigation_bar.dart';
+import 'splash_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  bool _isLoading = false;
+  //web view 의 로딩 상태를 상위 컴포넌트인 MainScreen로 이동
 
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
     GlobalKey<NavigatorState>(),
@@ -23,12 +26,27 @@ class _MainScreenState extends State<MainScreen> {
     GlobalKey<NavigatorState>(),
   ];
 
-  final List<Widget> _screens = [
+  // 로딩 상태를 변경하는 콜백 함수
+  void _setLoadingState(bool isLoading) {
+    setState(() {
+      _isLoading = isLoading;
+    });
+  }
 
-    const WebViewScreen(url: 'http://210.121.223.5:11101/'),
-    const HomeScreen(),
-    const SettingsScreen(),
-  ];
+  final List<Widget> _screens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _screens.addAll([
+      WebViewScreen(
+        url: 'http://210.121.223.5:11101/',
+        onLoadingChanged: _setLoadingState, // 콜백 전달
+      ),
+      const HomeScreen(),
+      const SettingsScreen(),
+    ]);
+  }
 
   // Titles for each tab
   final List<String> _titles = ['메인', '메뉴', '설정'];
@@ -43,6 +61,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 로딩 중일 때는 SplashScreen만 표시
+    if (_isLoading && _selectedIndex == 0) {
+      return SplashScreen();
+    }
+
     return Scaffold(
       appBar: CustomAppBar(), // Dynamic title
       body: WillPopScope(

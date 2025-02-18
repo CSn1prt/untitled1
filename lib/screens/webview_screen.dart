@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled1/screens/settings_screen.dart';
 import '../repositories/favorites_repository.dart';
+import 'Lower_navigation_bar.dart';
+import 'app_bar_screen.dart';
+import 'menu_screen.dart';
+import 'splash_screen.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
+  final Function(bool) onLoadingChanged; // 추가: 로딩 상태 변경 콜백
 
-  const WebViewScreen({Key? key, required this.url}) : super(key: key);
+  const WebViewScreen({
+    Key? key,
+    required this.url,
+    required this.onLoadingChanged, // 추가
+  }) : super(key: key);
 
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
@@ -15,9 +25,35 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   InAppWebViewController? _controller;
-  bool isLoading = true;
+  bool isLoading = false;
   bool isFavorite = false;
   final FavoritesRepository _favoritesRepository = FavoritesRepository();
+  int _selectedIndex = 0; // Add this
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Navigate based on the selected index
+    switch (index) {
+      case 0:
+      // Stay on current WebView
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SettingsScreen()),
+        );
+        break;
+    }
+  }
 
   Future<bool> _onWillPop() async {
     if (_controller != null) {
@@ -31,23 +67,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () async {
-              if (await _controller?.canGoBack() ?? false) {
-                _controller?.goBack();
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
+        // appBar: CustomAppBar(),
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 60),
           child: FloatingActionButton(
@@ -89,10 +114,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
               onLoadStop: (controller, url) => setState(() => isLoading = false),
               onLoadError: (controller, url, code, message) => setState(() => isLoading = false),
             ),
-            if (isLoading)
-              const FullScreenSplash(),
+
+
           ],
         ),
+        // bottomNavigationBar: CustomBottomNavigationBar(
+        //   selectedIndex: _selectedIndex,
+        //   onItemTapped: _onItemTapped,
+        // ),
       ),
     );
   }

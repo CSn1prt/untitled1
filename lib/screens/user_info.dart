@@ -78,11 +78,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               child: const Text('취소'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 // Perform logout logic here
                 // For example, clear user session and navigate to login screen
                 Navigator.pop(context); // Close the dialog
-                Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+                Navigator.pushReplacementNamed(context, '/login');
+                await LoginStateManager().logout();
               },
               child: const Text('로그아웃'),
             ),
