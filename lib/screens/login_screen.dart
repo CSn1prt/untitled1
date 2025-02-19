@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => WebViewScreen(url: 'http://210.121.223.5:11101/', onLoadingChanged: _setLoadingState)),
+        MaterialPageRoute(builder: (context) => MainScreen()),
       );
     }
   }

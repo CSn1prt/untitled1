@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/user_info.dart';
 //import '../screens/webview_screen.dart';
 import 'menu_screen.dart';
 import 'settings_screen.dart';
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
   ];
 
   // 로딩 상태를 변경하는 콜백 함수
@@ -44,12 +46,16 @@ class _MainScreenState extends State<MainScreen> {
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
       const HomeScreen(),
-      const SettingsScreen(),
+      WebViewScreen(
+        url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
+        onLoadingChanged: _setLoadingState, // 콜백 전달
+      ), // 이건 나중에 '진료예약'으로 바뀔 예정
+      const UserInfoScreen()
     ]);
   }
 
   // Titles for each tab
-  final List<String> _titles = ['메인', '메뉴', '설정'];
+  final List<String> _titles = ['홈', '메뉴', '진료예약', '내 정보'];
 
   void _onItemTapped(int index) {
     if (index < _screens.length) { // 잘못된 인덱스 방지

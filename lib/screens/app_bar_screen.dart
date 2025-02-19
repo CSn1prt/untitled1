@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/settings_screen.dart';
 import 'alarm_list_screen.dart';
 import 'navigation_bar_screen.dart';
 
@@ -36,7 +37,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     );
     },// 로고 아이콘 여백 조절
         child: Image.asset(
-          'assets/images/resized_icon.png',  // 로고 이미지 경로
+          'assets/images/exona_logo.png',  // 로고 이미지 경로
           width: 28,  // 추천 크기
           height: 28, // 추천 크기
           fit: BoxFit.contain, // 크기 조절
@@ -63,6 +64,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
         IconButton(
           icon: Icon(_isSearchExpanded ? Icons.close : Icons.search),
           onPressed: _toggleSearch,
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (context) => SettingsScreen()));// 설정 아이콘 동작 추가
+          },
         ),
         IconButton(
           icon: const Icon(Icons.notifications),

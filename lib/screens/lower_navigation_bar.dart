@@ -18,22 +18,27 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: '메인화면',
+          label: '홈',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.menu),
           label: '메뉴',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: '설정',
+          icon: Icon(Icons.medical_services),
+          label: '진료예약',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: '내 정보',
         ),
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: Colors.blue[800],
       onTap: onItemTapped,
     );
   }

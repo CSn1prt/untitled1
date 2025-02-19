@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/favorites_list_screen.dart';
+import 'package:untitled1/screens/user_info.dart';
 //import '../screens/settings_screen.dart';
 import 'settings_screen.dart';
 import 'loading_screen.dart';
@@ -18,53 +19,21 @@ class HomeScreen extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.center, // Center the Column vertically
           children: [
             ListTile(
-              title: const Text('로그아웃'),
+              title: const Text('로그인'),
               trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
               onTap: () {
                 // Navigate to the LoadingScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-            ),
-            const SizedBox(height: 16), // Now this is fine
-            ListTile(
-              title: const Text('알람 관리'),
-              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
-              onTap: () {
-                // Navigate to the LoadingScreen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
+                  MaterialPageRoute(builder: (context) => const UserInfoScreen()),
                 );
               },
             ),
             const SizedBox(height: 16), // Now this is fine
 
-            ListTile(
-              title: const Text('즐겨찾기'),
-              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
-              onTap: () {
-                // Navigate to the LoadingScreen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FavoritesListScreen()),
-                );
-              },
-            ),
-            const SizedBox(height: 16), // Now this is fine
-            ListTile(
-              title: const Text('고객 센터'),
-              trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
-              onTap: () {
-                // Navigate to the LoadingScreen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
-                );
-              },
-            ),
+
+
+
           ],
         ),
       ),
