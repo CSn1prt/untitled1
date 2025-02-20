@@ -1,6 +1,6 @@
 // lib/screens/settings_screen.dart
 import 'package:flutter/material.dart';
-import 'package:untitled1/screens/navigation_bar_screen.dart';
+import 'package:untitled1/screens/main_screen.dart';
 import '../screens/webview_screen.dart';
 import '../models/user_settings.dart';
 import '../repositories/user_repository.dart';
@@ -10,6 +10,8 @@ import 'favorites_list_screen.dart';
 import 'loading_screen.dart';
 import 'user_info.dart';
 import '../models/login_state.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 
@@ -61,6 +63,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       isLoading = loading;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -194,12 +198,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ListTile(
                   title: const Text('고객 센터'),
                   trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
-                  onTap: () {
-                    // Navigate to the LoadingScreen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoadingScreen()),
+                  onTap: () async {
+                    final Uri telUri = Uri(
+                      scheme: 'tel',
+                      path: '1599-2745', // 실제 고객센터 전화번호로 변경하세요.
                     );
+                    if (await canLaunchUrl(telUri)) {
+                    await launchUrl(telUri);
+                    } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("전화 연결을 할 수 없습니다.")),
+                    );
+                    }
                   },
                 ),
 

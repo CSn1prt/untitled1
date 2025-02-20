@@ -95,6 +95,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             alignment: Alignment.bottomRight,
             children: [
               FloatingActionButton(
+                elevation: 0,
                 onPressed: () {
                   // AI 챗봇 웹뷰로 이동
                   Navigator.push(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/webview_screen.dart';
 import '../models/login_state.dart';
-import 'package:untitled1/screens/navigation_bar_screen.dart';
+import 'package:untitled1/screens/main_screen.dart';
 import 'package:untitled1/screens/webview_screen.dart';
 
 class LoginScreen extends StatefulWidget {

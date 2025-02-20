@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'navigation_bar_screen.dart';
+import 'main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

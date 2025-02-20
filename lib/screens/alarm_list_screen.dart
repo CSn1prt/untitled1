@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/alarm.dart';
 import 'app_bar_screen.dart';
-import 'navigation_bar_screen.dart';
+import 'main_screen.dart';
 
 
 class AlarmListScreen extends StatefulWidget {

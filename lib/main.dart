@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/Lower_navigation_bar.dart';
+import 'package:untitled1/screens/app_bar_screen.dart';
 import 'screens/webview_screen.dart';
 import 'screens/login_screen.dart';
 import 'models/login_state.dart';
 import 'screens/main_screen.dart';
-import 'package:untitled1/screens/navigation_bar_screen.dart';
+import 'package:untitled1/screens/main_screen.dart';
 
 
 void main() {
   runApp(MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
+
+  // int _selectedIndex = 0;
+  // bool _isLoading = false;
+  // final List<Widget> _screens = [];
+  //
+  // void _onItemTapped(int index) {
+  //   if (index < _screens.length) { // 잘못된 인덱스 방지
+  //     setState(() {
+  //       _selectedIndex = index;
+  //     });
+  //   }
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +55,10 @@ class MyApp extends StatelessWidget {
                   } else {
                     final userEmail = userSnapshot.data;
                     if (userEmail != null) {
-                      return MainScreen();// 이메일이 저장되어 있으면 자동 로그인 성공
+                      return Scaffold(
+                          body: MainScreen(),
+
+                      );// 이메일이 저장되어 있으면 자동 로그인 성공
                     } else {
                       return LoginScreen(); // 로그인 정보 없음 -> 로그인 화면
                     }

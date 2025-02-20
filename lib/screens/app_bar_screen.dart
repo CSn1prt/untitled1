@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/settings_screen.dart';
 import 'alarm_list_screen.dart';
-import 'navigation_bar_screen.dart';
+import 'main_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key}) : super(key: key);
