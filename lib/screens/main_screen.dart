@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('메뉴 항목 1'),
+                  title: const Text('진료/검사 예약'),
                   onTap: () {
                     Navigator.pop(context); // 모달 시트 닫기
                     // 예를 들어, '메뉴' 탭이 index 1이라고 가정
@@ -90,13 +90,35 @@ class _MainScreenState extends State<MainScreen> {
                   },
                 ),
                 ListTile(
-                  title: const Text('메뉴 항목 2'),
+                  title: const Text('진로상담/병원안내'),
                   onTap: () {
                     // 메뉴 항목 2에 대한 동작 구현
                     Navigator.pop(context);
                   },
                 ),
                 // 추가 메뉴 항목들...
+                ListTile(
+                  title: const Text('건강검진 예약'),
+                  onTap: () {
+                    // 메뉴 항목 2에 대한 동작 구현
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Text('증명서 발급'),
+                  onTap: () {
+                    // 메뉴 항목 2에 대한 동작 구현
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Text('기타'),
+                  onTap: () {
+                    // 메뉴 항목 2에 대한 동작 구현
+                    Navigator.pop(context);
+                  },
+                ),
+                
               ],
             ),
           );

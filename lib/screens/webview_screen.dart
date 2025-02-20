@@ -9,6 +9,7 @@ import 'Lower_navigation_bar.dart';
 import 'app_bar_screen.dart';
 import 'menu_screen.dart';
 import 'splash_screen.dart';
+import 'menu_screen.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -30,7 +31,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   bool isFavorite = false;
   final FavoritesRepository _favoritesRepository = FavoritesRepository();
   int _selectedIndex = 0;
-  bool _showSpeechBubble = true; // 말풍선 표시 여부
+  bool _showSpeechBubble = false; // 초기에는 숨김 상태로 시작
+  Timer? _speechBubbleTimer;
 
   // 로딩 상태를 변경하는 콜백 함수
   void _setLoadingState(bool loading) {
@@ -42,15 +44,34 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
-    // 웹뷰 화면 진입 후 18초 후 말풍선을 표시
-    Timer(const Duration(seconds: 4), () {
-      setState(() {
-        _showSpeechBubble = true;
-      });
+    // 웹뷰 화면 진입 후 3초 후 말풍선을 표시
+    _speechBubbleTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showSpeechBubble = true;
+          print("말풍선 상태 변경: $_showSpeechBubble"); // 디버깅용
+        });
+
+        // 10초 후에 말풍선 자동 숨김
+        Timer(const Duration(seconds: 10), () {
+          if (mounted) {
+            setState(() {
+              _showSpeechBubble = false;
+            });
+          }
+        });
+      }
     });
   }
 
+  @override
+  void dispose() {
+    _speechBubbleTimer?.cancel();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
+    // 기존 코드 유지
     setState(() {
       _selectedIndex = index;
     });
@@ -88,14 +109,15 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        // appBar: CustomAppBar(),
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 60),
           child: Stack(
             alignment: Alignment.bottomRight,
+            clipBehavior: Clip.none, // 중요: 말풍선이 Stack 경계를 넘어갈 수 있도록 함
             children: [
               FloatingActionButton(
-                elevation: 0,
+                backgroundColor: Colors.blue,
+                elevation: 4,
                 onPressed: () {
                   // AI 챗봇 웹뷰로 이동
                   Navigator.push(
@@ -109,29 +131,52 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     ),
                   );
                 },
-                child: const Icon(Icons.chat_bubble_outline),
+                child: const Icon(Icons.chat_bubble_outline, color: Colors.white),
               ),
-              // 18초 후 말풍선 표시
+              // 말풍선 표시
               if (_showSpeechBubble)
                 Positioned(
-                  right: 70, // FAB 옆에 위치 (필요시 값 조정)
-                  bottom: 0,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                  right: 70,
+                  bottom: 10,
+                  child: Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        // 말풍선 클릭시 챗봇으로 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WebViewScreen(
+                              url:
+                              'https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90',
+                              onLoadingChanged: _setLoadingState,
+                            ),
+                          ),
+                        );
+                      },
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(2, 2),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '혹시 물어보실 것은 없으신가요?😊',
+                              style: TextStyle(fontSize: 12, color: Colors.black),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _showSpeechBubble = false;
+                                });
+                              },
+                              child: const Icon(Icons.close, size: 14, color: Colors.grey),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: const Text(
-                      '혹시 물어보실 것은 없으신가요?😊',
-                      style: TextStyle(fontSize: 12, color: Colors.black),
+                      ),
                     ),
                   ),
                 ),
@@ -170,10 +215,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
             if (isLoading) const WaitingScreen(),
           ],
         ),
-        // bottomNavigationBar: CustomBottomNavigationBar(
-        //   selectedIndex: _selectedIndex,
-        //   onItemTapped: _onItemTapped,
-        // ),
       ),
     );
   }
