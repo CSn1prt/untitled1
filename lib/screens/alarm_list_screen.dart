@@ -178,6 +178,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
           },
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blue,
           onPressed: () => _addOrEditAlarm(),
           child: Icon(Icons.add),
         ),

@@ -65,6 +65,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
           icon: Icon(_isSearchExpanded ? Icons.close : Icons.search),
           onPressed: _toggleSearch,
         ),
+
+        IconButton(
+          icon: const Icon(Icons.notifications),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                builder: (context) => AlarmListScreen()));// 알림 아이콘 동작 추가
+          },
+
+
+        ),
+
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () {
@@ -73,14 +85,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     builder: (context) => SettingsScreen()));// 설정 아이콘 동작 추가
           },
         ),
-        IconButton(
-          icon: const Icon(Icons.notifications),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                builder: (context) => AlarmListScreen()));// 알림 아이콘 동작 추가
-          },
-        ),
+
       ],
     );
   }

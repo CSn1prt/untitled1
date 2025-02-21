@@ -61,58 +61,100 @@ class _MainScreenState extends State<MainScreen> {
     if (index == 2) { // 메뉴 버튼에 해당하는 인덱스
       showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.transparent, // 투명 배경을 원한다면
+        isScrollControlled: true, // 오버레이의 높이를 조절할 수 있게 함
+        backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  title: const Text('진료/검사 예약'),
-                  onTap: () {
-                    Navigator.pop(context); // 모달 시트 닫기
-                    // 예를 들어, '메뉴' 탭이 index 1이라고 가정
-                    _navigatorKeys[1].currentState!.push(
-                      MaterialPageRoute(
-                        builder: (context) => WebViewScreen(
-                          url: 'https://www.naver.com',
-                          onLoadingChanged: _setLoadingState,
-                        ),
+          return Padding(
+              // 네비게이션 바 높이만큼의 하단 여백 추가
+              padding: EdgeInsets.only(
+                bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,),
+          //메뉴화면을 (네비게이션 바 + SafeArea) 높이만큼 올려주기
+          child: Container(
+          decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+          ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text('진료/검사 예약'),
+                onTap: () {
+                  Navigator.pop(context); // 바텀 시트 닫기
+                  setState(() {
+                    _selectedIndex = 1; // 진료예약 탭으로 이동
+
+                  });
+                  _navigatorKeys[1].currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                        url: 'https://www.naver.com',
+                        onLoadingChanged: _setLoadingState,
                       ),
-                    );
-                  },
-                ),
-                ListTile(
-                  title: const Text('진로상담/병원안내'),
-                  onTap: () {
-                    // 메뉴 항목 2에 대한 동작 구현
-                    Navigator.pop(context);
-                  },
-                ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('진료상담/병원안내'),
+                onTap: () {
+                  Navigator.pop(context); // 바텀 시트 닫기
+                  setState(() {
+                    _selectedIndex = 1; // 진료예약 탭으로 이동
+
+                  });
+                  _navigatorKeys[1].currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                        url: 'https://www.naver.com',
+                        onLoadingChanged: _setLoadingState,
+                      ),
+                    ),
+                  );
+                },
+              ),
                 // 추가 메뉴 항목들...
+              ListTile(
+                title: const Text('건강검진 예약'),
+                onTap: () {
+                  Navigator.pop(context); // 바텀 시트 닫기
+                  setState(() {
+                    _selectedIndex = 1; // 진료예약 탭으로 이동
+
+                  });
+                  _navigatorKeys[1].currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                        url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
+                        onLoadingChanged: _setLoadingState,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('증명서 발급'),
+                onTap: () {
+                  Navigator.pop(context); // 바텀 시트 닫기
+                  setState(() {
+                    _selectedIndex = 1; // 진료예약 탭으로 이동
+
+                  });
+                  _navigatorKeys[0].currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                        url: 'https://www.naver.com',
+                        onLoadingChanged: _setLoadingState,
+                      ),
+                    ),
+                  );
+                },
+              ),
                 ListTile(
-                  title: const Text('건강검진 예약'),
-                  onTap: () {
-                    // 메뉴 항목 2에 대한 동작 구현
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: const Text('증명서 발급'),
-                  onTap: () {
-                    // 메뉴 항목 2에 대한 동작 구현
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: const Text('기타'),
+                  title: const Text('닫기'),
                   onTap: () {
                     // 메뉴 항목 2에 대한 동작 구현
                     Navigator.pop(context);
@@ -121,9 +163,11 @@ class _MainScreenState extends State<MainScreen> {
                 
               ],
             ),
+          ),
           );
         },
-      );
+
+    );
     } else {
       setState(() {
         _selectedIndex = index;

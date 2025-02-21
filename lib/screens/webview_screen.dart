@@ -13,12 +13,14 @@ import 'menu_screen.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
+  final bool showFloatingButton;
   final Function(bool) onLoadingChanged; // 로딩 상태 변경 콜백
 
   const WebViewScreen({
     Key? key,
     required this.url,
     required this.onLoadingChanged,
+    this.showFloatingButton = true, // 기본값 true
   }) : super(key: key);
 
   @override
@@ -109,7 +111,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        floatingActionButton: Padding(
+        floatingActionButton: widget.showFloatingButton
+            ? Padding(
           padding: const EdgeInsets.only(bottom: 60),
           child: Stack(
             alignment: Alignment.bottomRight,
@@ -119,7 +122,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 backgroundColor: Colors.blue,
                 elevation: 4,
                 onPressed: () {
-                  // AI 챗봇 웹뷰로 이동
+                  // AI 챗봇 웹뷰로 이동 (FloatingButton 클릭)
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -127,13 +130,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         url:
                         'https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90',
                         onLoadingChanged: _setLoadingState,
+                        showFloatingButton: false, // 챗봇 웹뷰에서는 버튼 숨김
                       ),
                     ),
                   );
                 },
                 child: const Icon(Icons.chat_bubble_outline, color: Colors.white),
               ),
-              // 말풍선 표시
               if (_showSpeechBubble)
                 Positioned(
                   right: 70,
@@ -144,7 +147,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     color: Colors.white,
                     child: InkWell(
                       onTap: () {
-                        // 말풍선 클릭시 챗봇으로 이동
+                        // 말풍선 클릭 시 챗봇 웹뷰로 이동
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -152,6 +155,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                               url:
                               'https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90',
                               onLoadingChanged: _setLoadingState,
+                              showFloatingButton: false, // 챗봇 웹뷰에서는 버튼 숨김
                             ),
                           ),
                         );
@@ -162,7 +166,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         child: Row(
                           children: [
                             const Text(
-                              '혹시 물어보실 것은 없으신가요?😊',
+                              '안녕하세요! 무엇을 도와드릴까요?😊',
                               style: TextStyle(fontSize: 12, color: Colors.black),
                             ),
                             const SizedBox(width: 4),
@@ -182,7 +186,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 ),
             ],
           ),
-        ),
+        )
+            : null, // showFloatingButton이 false이면 FloatingButton 숨김
+
         body: Stack(
           children: [
             InAppWebView(
@@ -211,8 +217,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 });
               },
             ),
-            // 로딩 중이면 WaitingScreen 표시
-            if (isLoading) const WaitingScreen(),
+            if (isLoading) const Center(child: CircularProgressIndicator()), // 로딩 화면 표시
           ],
         ),
       ),
