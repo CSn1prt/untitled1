@@ -90,10 +90,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
         );
         break;
       case 2:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SettingsScreen()),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
+        // );
         break;
     }
   }
@@ -217,7 +217,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 });
               },
             ),
-            if (isLoading) const Center(child: CircularProgressIndicator()), // 로딩 화면 표시
+            if (isLoading) WaitingScreen(), // 로딩 화면 표시
           ],
         ),
       ),

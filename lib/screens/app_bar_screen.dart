@@ -80,9 +80,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => SettingsScreen()));// 설정 아이콘 동작 추가
+            showFullScreenSettingsOverlay(context);
           },
         ),
 

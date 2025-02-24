@@ -67,7 +67,8 @@ class _MainScreenState extends State<MainScreen> {
           return Padding(
               // 네비게이션 바 높이만큼의 하단 여백 추가
               padding: EdgeInsets.only(
-                bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,),
+                // bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
+              ),
           //메뉴화면을 (네비게이션 바 + SafeArea) 높이만큼 올려주기
           child: Container(
           decoration: const BoxDecoration(
@@ -85,10 +86,10 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   Navigator.pop(context); // 바텀 시트 닫기
                   setState(() {
-                    _selectedIndex = 1; // 진료예약 탭으로 이동
+                    _selectedIndex = 2; // 진료예약 탭으로 이동
 
                   });
-                  _navigatorKeys[1].currentState!.push(
+                  _navigatorKeys[2].currentState!.push(
                     MaterialPageRoute(
                       builder: (context) => WebViewScreen(
                         url: 'https://www.naver.com',
@@ -103,10 +104,10 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   Navigator.pop(context); // 바텀 시트 닫기
                   setState(() {
-                    _selectedIndex = 1; // 진료예약 탭으로 이동
+                    _selectedIndex = 2; // 진료예약 탭으로 이동
 
                   });
-                  _navigatorKeys[1].currentState!.push(
+                  _navigatorKeys[2].currentState!.push(
                     MaterialPageRoute(
                       builder: (context) => WebViewScreen(
                         url: 'https://www.naver.com',
@@ -122,10 +123,10 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   Navigator.pop(context); // 바텀 시트 닫기
                   setState(() {
-                    _selectedIndex = 1; // 진료예약 탭으로 이동
+                    _selectedIndex = 2; // 진료예약 탭으로 이동
 
                   });
-                  _navigatorKeys[1].currentState!.push(
+                  _navigatorKeys[2].currentState!.push(
                     MaterialPageRoute(
                       builder: (context) => WebViewScreen(
                         url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
@@ -140,10 +141,10 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   Navigator.pop(context); // 바텀 시트 닫기
                   setState(() {
-                    _selectedIndex = 1; // 진료예약 탭으로 이동
+                    _selectedIndex = 2; // 진료예약 탭으로 이동
 
                   });
-                  _navigatorKeys[0].currentState!.push(
+                  _navigatorKeys[2].currentState!.push(
                     MaterialPageRoute(
                       builder: (context) => WebViewScreen(
                         url: 'https://www.naver.com',
@@ -153,14 +154,24 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 },
               ),
-                ListTile(
-                  title: const Text('닫기'),
-                  onTap: () {
-                    // 메뉴 항목 2에 대한 동작 구현
-                    Navigator.pop(context);
-                  },
+              const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
+
+              // 닫기 버튼을 ListTile 형태로 커스터마이징
+              ListTile(
+                leading: const Icon(Icons.close, color: Colors.red),
+                title: const Text(
+                  '닫기',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                
+                tileColor: Colors.grey[100],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+
               ],
             ),
           ),
