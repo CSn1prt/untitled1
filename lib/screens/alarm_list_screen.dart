@@ -2,9 +2,177 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/alarm.dart';
-import 'app_bar_screen.dart';
-import 'main_screen.dart';
+import '../screens/main_screen.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+// FullScreenAlarmOverlay 위젯: 슬라이드 애니메이션과 함께 전체 화면 오버레이를 표시합니다.
+class FullScreenAlarmOverlay extends StatefulWidget {
+  final Alarm? existingAlarm;
+  final ValueChanged<Alarm> onSave;
+  final VoidCallback onClose;
+
+  const FullScreenAlarmOverlay({
+    Key? key,
+    this.existingAlarm,
+    required this.onSave,
+    required this.onClose,
+  }) : super(key: key);
+
+  @override
+  _FullScreenAlarmOverlayState createState() => _FullScreenAlarmOverlayState();
+}
+
+class _FullScreenAlarmOverlayState extends State<FullScreenAlarmOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+  late TextEditingController _titleController;
+  late TextEditingController _timeController;
+  bool _isActive = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(
+        text: widget.existingAlarm != null ? widget.existingAlarm!.title : '');
+    _timeController = TextEditingController(
+        text: widget.existingAlarm != null ? widget.existingAlarm!.time : '');
+    _isActive = widget.existingAlarm?.isActive ?? true;
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _animation = Tween<Offset>(
+      begin: const Offset(0, 1), // 시작: 화면 아래에서 시작
+      end: Offset.zero, // 끝: 원래 위치
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _timeController.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _closeOverlay() {
+    _controller.reverse().then((value) {
+      widget.onClose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _animation,
+      child: Material(
+        color: Colors.black.withOpacity(0.5),
+        child: SafeArea(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                // 헤더: 타이틀과 닫기 버튼
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  color: Colors.blue,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.existingAlarm == null ? '알람 추가' : '알람 수정',
+                        style: const TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.white),
+                        onPressed: _closeOverlay,
+                      ),
+                    ],
+                  ),
+                ),
+                //본문: 알람 제목, 시간, 활성화 스위치
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListView(
+                      children: [
+                        TextField(
+                          controller: _titleController,
+                          decoration: const InputDecoration(
+                            labelText: "알람 제목",
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: _timeController,
+                          decoration: const InputDecoration(
+                            labelText: "시간",
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        SwitchListTile(
+                          title: const Text("알람 활성화"),
+                          value: _isActive,
+                          onChanged: (value) {
+                            setState(() {
+                              _isActive = value;
+                            });
+                          },
+                        ),
+
+                        ElevatedButton(
+                          onPressed: _triggerTestNotification,
+                          child: const Text('알림 테스트'),
+                        ),
+
+
+                      ],
+                    ),
+                  ),
+                ),
+                // 액션 버튼: 취소 및 저장
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: _closeOverlay,
+                        child: const Text("취소"),
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () {
+                          if (_titleController.text.isNotEmpty &&
+                              _timeController.text.isNotEmpty) {
+                            Alarm newAlarm = Alarm(
+                              title: _titleController.text,
+                              time: _timeController.text,
+                              isActive: _isActive,
+                            );
+                            widget.onSave(newAlarm);
+                            _closeOverlay();
+                          }
+                        },
+                        child: const Text("저장"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// AlarmListScreen에 적용하는 예시 코드
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({Key? key}) : super(key: key);
 
@@ -21,7 +189,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     _loadAlarms();
   }
 
-  // SharedPreferences 에서 알람 목록 불러오기
+  // SharedPreferences에서 알람 목록 불러오기
   Future<void> _loadAlarms() async {
     final prefs = await SharedPreferences.getInstance();
     final String? alarmsJson = prefs.getString('alarms');
@@ -43,74 +211,30 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     await prefs.setString('alarms', alarmsJson);
   }
 
+  // 오버레이로 알람 추가/수정 화면을 띄움
   void _addOrEditAlarm({Alarm? existingAlarm, int? index}) {
-    TextEditingController titleController = TextEditingController();
-    TextEditingController timeController = TextEditingController();
-    bool isActive = existingAlarm?.isActive ?? true;
+    late OverlayEntry overlayEntry;
 
-    if (existingAlarm != null) {
-      titleController.text = existingAlarm.title;
-      timeController.text = existingAlarm.time;
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(existingAlarm == null ? "알람 추가" : "알람 수정"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(labelText: "알람 제목"),
-              ),
-              TextField(
-                controller: timeController,
-                decoration: InputDecoration(labelText: "시간"),
-              ),
-              SwitchListTile(
-                title: Text("알람 활성화"),
-                value: isActive,
-                onChanged: (value) {
-                  setState(() {
-                    isActive = value;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("취소"),
-            ),
-            TextButton(
-              onPressed: () {
-                if (titleController.text.isNotEmpty &&
-                    timeController.text.isNotEmpty) {
-                  setState(() {
-                    Alarm newAlarm = Alarm(
-                      title: titleController.text,
-                      time: timeController.text,
-                      isActive: isActive,
-                    );
-                    if (existingAlarm == null) {
-                      alarms.add(newAlarm);
-                    } else {
-                      alarms[index!] = newAlarm;
-                    }
-                    _saveAlarms();
-                  });
-                  Navigator.pop(context);
-                }
-              },
-              child: Text("저장"),
-            ),
-          ],
-        );
-      },
+    overlayEntry = OverlayEntry(
+      builder: (context) => FullScreenAlarmOverlay(
+        existingAlarm: existingAlarm,
+        onSave: (newAlarm) {
+          setState(() {
+            if (existingAlarm == null) {
+              alarms.add(newAlarm);
+            } else {
+              alarms[index!] = newAlarm;
+            }
+            _saveAlarms();
+          });
+        },
+        onClose: () {
+          overlayEntry.remove();
+        },
+      ),
     );
+
+    Overlay.of(context)?.insert(overlayEntry);
   }
 
   void _deleteAlarm(int index) {
@@ -130,11 +254,11 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
           context,
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
-        return false; // 기본 pop 동작 방지
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: const BackButton(), // 뒤로가기 버튼 강제 표시
+          leading: const BackButton(),
           title: const Text('알람'),
           actions: [
             IconButton(
@@ -145,7 +269,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
             ),
           ],
           flexibleSpace: Container(
-            color: Colors.blue, // AppBar 뒤에 표시할 위젯
+            color: Colors.blue,
           ),
         ),
         body: ListView.builder(
@@ -162,12 +286,12 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit, color: Colors.blue),
+                    icon: const Icon(Icons.edit, color: Colors.blue),
                     onPressed: () =>
                         _addOrEditAlarm(existingAlarm: alarms[index], index: index),
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () => _deleteAlarm(index),
                   ),
                 ],
@@ -180,9 +304,47 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blue,
           onPressed: () => _addOrEditAlarm(),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
   }
+}
+
+//알람 테스트 버튼 위치
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+Future<void> initializeNotifications() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher'); // 앱 아이콘 설정
+
+  const InitializationSettings initializationSettings =
+  InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+}
+
+Future<void> _triggerTestNotification() async {
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  AndroidNotificationDetails(
+    'test_channel_id', // 채널 id
+    'Test Channel', // 채널 이름
+    channelDescription: 'Channel for testing alarms',
+    importance: Importance.max,
+    priority: Priority.high,
+    playSound: true,
+  );
+  const NotificationDetails platformChannelSpecifics =
+  NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    '테스트 알림',
+    '이것은 테스트 알림입니다.',
+    platformChannelSpecifics,
+  );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/settings_screen.dart';
+import '../models/alarm.dart';
 import 'alarm_list_screen.dart';
 import 'main_screen.dart';
 
@@ -69,9 +70,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
         IconButton(
           icon: const Icon(Icons.notifications),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                builder: (context) => AlarmListScreen()));// 알림 아이콘 동작 추가
+            late OverlayEntry overlayEntry;
+            overlayEntry = OverlayEntry(
+              builder: (context) =>
+                  FullScreenAlarmOverlay(
+                    onSave: (Alarm value) {
+                      // 저장 처리
+                    },
+                    onClose: () {
+                      overlayEntry.remove();
+                    },
+                  ),
+            );
+            Overlay.of(context)?.insert(overlayEntry);
           },
 
 

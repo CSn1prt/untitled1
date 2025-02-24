@@ -106,10 +106,32 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return true;
   }
 
+  // Future<bool> _handleWillPop() async {
+  //   final currentUrl = await _controller?.currentUrl();
+  //   // A 사이트의 하위 페이지 URL에 대한 식별자 예시 (예: 특정 쿼리스트링, 경로 등)
+  //   if (currentUrl != null && currentUrl.contains("sub_item_identifier")) {
+  //     // A 사이트 메인 페이지 URL로 강제 로드
+  //     _controller!.loadRequest(Uri.parse("http://210.121.223.5:11101/"));
+  //     return false; // 뒤로가기 대신 부모 페이지 로드
+  //   }
+  //   if (await _controller!.canGoBack()) {
+  //     _controller!.goBack();
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onWillPop,
+      onWillPop: () async {
+        if (await _controller!.canGoBack()) {
+          _controller?.goBack();
+          return false; // 앱 전체 종료 대신 웹뷰 내에서 뒤로가기 수행
+        }
+        return true;
+      },
       child: Scaffold(
         floatingActionButton: widget.showFloatingButton
             ? Padding(

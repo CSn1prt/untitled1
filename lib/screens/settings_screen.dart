@@ -99,4 +99,3 @@ void showFullScreenSettingsOverlay(BuildContext context) {
 
   Overlay.of(context)?.insert(overlayEntry);
 }
-

@@ -65,120 +65,120 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
           return Padding(
-              // 네비게이션 바 높이만큼의 하단 여백 추가
-              padding: EdgeInsets.only(
-                // bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
-              ),
-          //메뉴화면을 (네비게이션 바 + SafeArea) 높이만큼 올려주기
-          child: Container(
-          decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-          ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: const Text('진료/검사 예약'),
-                onTap: () {
-                  Navigator.pop(context); // 바텀 시트 닫기
-                  setState(() {
-                    _selectedIndex = 2; // 진료예약 탭으로 이동
-
-                  });
-                  _navigatorKeys[2].currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) => WebViewScreen(
-                        url: 'https://www.naver.com',
-                        onLoadingChanged: _setLoadingState,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('진료상담/병원안내'),
-                onTap: () {
-                  Navigator.pop(context); // 바텀 시트 닫기
-                  setState(() {
-                    _selectedIndex = 2; // 진료예약 탭으로 이동
-
-                  });
-                  _navigatorKeys[2].currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) => WebViewScreen(
-                        url: 'https://www.naver.com',
-                        onLoadingChanged: _setLoadingState,
-                      ),
-                    ),
-                  );
-                },
-              ),
-                // 추가 메뉴 항목들...
-              ListTile(
-                title: const Text('건강검진 예약'),
-                onTap: () {
-                  Navigator.pop(context); // 바텀 시트 닫기
-                  setState(() {
-                    _selectedIndex = 2; // 진료예약 탭으로 이동
-
-                  });
-                  _navigatorKeys[2].currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) => WebViewScreen(
-                        url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
-                        onLoadingChanged: _setLoadingState,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('증명서 발급'),
-                onTap: () {
-                  Navigator.pop(context); // 바텀 시트 닫기
-                  setState(() {
-                    _selectedIndex = 2; // 진료예약 탭으로 이동
-
-                  });
-                  _navigatorKeys[2].currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) => WebViewScreen(
-                        url: 'https://www.naver.com',
-                        onLoadingChanged: _setLoadingState,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
-
-              // 닫기 버튼을 ListTile 형태로 커스터마이징
-              ListTile(
-                leading: const Icon(Icons.close, color: Colors.red),
-                title: const Text(
-                  '닫기',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                tileColor: Colors.grey[100],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-
-              ],
+            // 네비게이션 바 높이만큼의 하단 여백 추가
+            padding: EdgeInsets.only(
+              // bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
             ),
-          ),
+            //메뉴화면을 (네비게이션 바 + SafeArea) 높이만큼 올려주기
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    title: const Text('진료/검사 예약'),
+                    onTap: () {
+                      Navigator.pop(context); // 바텀 시트 닫기
+                      setState(() {
+                        _selectedIndex = 2; // 진료예약 탭으로 이동
+
+                      });
+                      _navigatorKeys[2].currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => WebViewScreen(
+                            url: 'https://www.naver.com',
+                            onLoadingChanged: _setLoadingState,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('진료상담/병원안내'),
+                    onTap: () {
+                      Navigator.pop(context); // 바텀 시트 닫기
+                      setState(() {
+                        _selectedIndex = 2; // 진료예약 탭으로 이동
+
+                      });
+                      _navigatorKeys[2].currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => WebViewScreen(
+                            url: 'https://www.naver.com',
+                            onLoadingChanged: _setLoadingState,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  // 추가 메뉴 항목들...
+                  ListTile(
+                    title: const Text('건강검진 예약'),
+                    onTap: () {
+                      Navigator.pop(context); // 바텀 시트 닫기
+                      setState(() {
+                        _selectedIndex = 2; // 진료예약 탭으로 이동
+
+                      });
+                      _navigatorKeys[2].currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => WebViewScreen(
+                            url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
+                            onLoadingChanged: _setLoadingState,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('증명서 발급'),
+                    onTap: () {
+                      Navigator.pop(context); // 바텀 시트 닫기
+                      setState(() {
+                        _selectedIndex = 2; // 진료예약 탭으로 이동
+
+                      });
+                      _navigatorKeys[2].currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => WebViewScreen(
+                            url: 'https://www.naver.com',
+                            onLoadingChanged: _setLoadingState,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
+
+                  // 닫기 버튼을 ListTile 형태로 커스터마이징
+                  ListTile(
+                    leading: const Icon(Icons.close, color: Colors.red),
+                    title: const Text(
+                      '닫기',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    tileColor: Colors.grey[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+
+                ],
+              ),
+            ),
           );
         },
 
-    );
+      );
     } else {
       setState(() {
         _selectedIndex = index;
