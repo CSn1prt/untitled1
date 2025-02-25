@@ -73,13 +73,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
             late OverlayEntry overlayEntry;
             overlayEntry = OverlayEntry(
               builder: (context) =>
-                  FullScreenAlarmOverlay(
-                    onSave: (Alarm value) {
+                  FullScreenAlarmListOverlay(
+                    onSave: (List<Alarm> alarms) {
                       // 저장 처리
                     },
                     onClose: () {
                       overlayEntry.remove();
-                    },
+                    }, initialAlarms: [],
                   ),
             );
             Overlay.of(context)?.insert(overlayEntry);

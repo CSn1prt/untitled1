@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:untitled1/screens/alarm_manager_screen.dart';
 import 'package:untitled1/screens/user_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -104,6 +105,20 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                             context,
                             MaterialPageRoute(builder: (context) => FavoritesListScreen()),
                           );
+                          widget.onClose();
+                        },
+                      ),
+
+                      ListTile(
+                        title: const Text('알람 관리'),
+                        trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+                        onTap: () {
+                          // Navigate to the LoadingScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AlarmManagerScreen()),
+                          );
+                          widget.onClose();
                         },
                       ),
 

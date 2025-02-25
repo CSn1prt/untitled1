@@ -63,7 +63,31 @@ class _MainScreenState extends State<MainScreen> {
         isScrollControlled: true, // 오버레이의 높이를 조절할 수 있게 함
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return Padding(
+          return Stack(
+              clipBehavior: Clip.none, // 메뉴 박스 밖의 위치도 표시
+              children: [
+                Positioned(
+                  top: -38, // 컨테이너 위쪽 밖으로 빼내기 위해 음수 값 사용
+                  right: 16, // 위치는 필요에 따라 조정
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: const Icon(
+                        Icons.close,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+           Padding(
             // 네비게이션 바 높이만큼의 하단 여백 추가
             padding: EdgeInsets.only(
               // bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
@@ -77,9 +101,14 @@ class _MainScreenState extends State<MainScreen> {
                   topRight: Radius.circular(16.0),
                 ),
               ),
+
+
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+
+
+
 
                   // 닫기 버튼을 ListTile 형태로 커스터마이징
                   ListTile(
@@ -108,7 +137,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: 'https://www.naver.com',
+                            url: 'http://210.121.223.5:11101/Main?PatientType=N',
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -126,7 +155,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: 'https://www.naver.com',
+                            url: "http://210.121.223.5:11101/Error/001?ReturnUrl=%2FHospitalInfo%2FSD%3FDHM%3D0%26CodeSeq%3D1",
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -163,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: 'https://www.naver.com',
+                            url: "https://clinic.mycerti.com/",
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -174,9 +203,12 @@ class _MainScreenState extends State<MainScreen> {
 
 
 
+
                 ],
               ),
             ),
+          ),
+          ],
           );
         },
 
