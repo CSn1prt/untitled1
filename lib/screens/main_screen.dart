@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/appointment_main_screen.dart';
 import 'package:untitled1/screens/user_info.dart';
 //import '../screens/webview_screen.dart';
 import 'menu_screen.dart';
@@ -42,13 +43,11 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _screens.addAll([
       WebViewScreen(
-        url: 'http://210.121.223.5:11101/',
+        url: 'http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_group1.html',
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
-      WebViewScreen(
-        url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
-        onLoadingChanged: _setLoadingState, // 콜백 전달
-      ), // 이건 나중에 '진료예약'으로 바뀔 예정
+      const AppointmentMainScreen(),
+      //'진료예약'으로 바뀔 예정
       const HomeScreen(),
       const UserInfoScreen()
     ]);
@@ -81,6 +80,23 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+
+                  // 닫기 버튼을 ListTile 형태로 커스터마이징
+                  ListTile(
+                    leading: const Icon(Icons.close, color: Colors.red),
+                    title: const Text(
+                      '닫기',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    tileColor: Colors.grey[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+
                   ListTile(
                     title: const Text('진료/검사 예약'),
                     onTap: () {
@@ -156,21 +172,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
 
-                  // 닫기 버튼을 ListTile 형태로 커스터마이징
-                  ListTile(
-                    leading: const Icon(Icons.close, color: Colors.red),
-                    title: const Text(
-                      '닫기',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    tileColor: Colors.grey[100],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+
 
                 ],
               ),

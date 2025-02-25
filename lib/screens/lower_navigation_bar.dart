@@ -25,7 +25,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: '홈',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.medical_services),
+          icon: Icon(Icons.calendar_month_sharp),
           label: '진료예약',
         ),
         BottomNavigationBarItem(
