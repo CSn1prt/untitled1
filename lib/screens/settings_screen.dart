@@ -1,30 +1,53 @@
-// lib/screens/settings_screen.dart
 import 'package:flutter/material.dart';
-import 'package:untitled1/screens/main_screen.dart';
-import '../screens/webview_screen.dart';
-import '../models/user_settings.dart';
-import '../repositories/user_repository.dart';
-import 'lower_navigation_bar.dart';
-import 'app_bar_screen.dart';
-import 'favorites_list_screen.dart';
-import 'loading_screen.dart';
-import 'user_info.dart';
-import '../models/login_state.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:untitled1/screens/user_info.dart';
 
-void showFullScreenSettingsOverlay(BuildContext context) {
-  late OverlayEntry overlayEntry;
+class FullScreenSettingsOverlay extends StatefulWidget {
+  final VoidCallback onClose;
+  const FullScreenSettingsOverlay({Key? key, required this.onClose})
+      : super(key: key);
 
-  overlayEntry = OverlayEntry(
-    builder: (context) => Positioned.fill(
+  @override
+  _FullScreenSettingsOverlayState createState() => _FullScreenSettingsOverlayState();
+}
+
+class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _animation = Tween<Offset>(
+      begin: const Offset(0, 1), // 시작 위치: 화면 아래
+      end: Offset.zero, // 최종 위치: 원래 위치(화면 채움)
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _animation,
       child: Material(
-        color: Colors.black.withOpacity(0.5), // 반투명 배경 효과
+        color: Colors.black.withOpacity(0.5), // 반투명 배경
         child: SafeArea(
           child: Container(
             color: Colors.white,
             child: Column(
               children: [
-                // 상단 타이틀 및 닫기 버튼
+                // 헤더 영역 (타이틀 + 닫기 버튼)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   color: Colors.blue,
@@ -38,7 +61,9 @@ void showFullScreenSettingsOverlay(BuildContext context) {
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.white),
                         onPressed: () {
-                          overlayEntry.remove();
+                          _controller.reverse().then((value) {
+                            widget.onClose();
+                          });
                         },
                       ),
                     ],
@@ -51,41 +76,21 @@ void showFullScreenSettingsOverlay(BuildContext context) {
                       ListTile(
                         title: const Text('계정 정보'),
                         onTap: () {
-                          overlayEntry.remove();
+                          widget.onClose();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const UserInfoScreen()),
+                            MaterialPageRoute(builder: (_) => const UserInfoScreen()),
                           );
                         },
                       ),
                       SwitchListTile(
                         title: const Text('다크 모드'),
-                        value: false, // 실제 상태 값과 연결
+                        value: false, // 실제 상태 값 연결 필요
                         onChanged: (value) {
-                          // 다크 모드 상태 업데이트
+                          // 다크 모드 변경 로직
                         },
                       ),
-                      SwitchListTile(
-                        title: const Text('알람 활성화'),
-                        value: false, // 실제 상태 값과 연결
-                        onChanged: (value) {
-                          // 알람 활성화 상태 업데이트
-                        },
-                      ),
-                      // 추가 옵션들...
-                      ListTile(
-                        title: const Text('기기 접근 권한'),
-                        onTap: () {
-                          overlayEntry.remove();
-                          // 권한 설정 화면으로 이동 또는 처리
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('자동 로그아웃 설정'),
-                        onTap: () {
-                          // 자동 로그아웃 설정 처리
-                        },
-                      ),
+                      // 추가 옵션들을 여기에 추가...
                     ],
                   ),
                 ),
@@ -94,6 +99,18 @@ void showFullScreenSettingsOverlay(BuildContext context) {
           ),
         ),
       ),
+    );
+  }
+}
+
+void showFullScreenSettingsOverlay(BuildContext context) {
+  late OverlayEntry overlayEntry;
+
+  overlayEntry = OverlayEntry(
+    builder: (context) => FullScreenSettingsOverlay(
+      onClose: () {
+        overlayEntry.remove();
+      },
     ),
   );
 

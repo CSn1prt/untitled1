@@ -84,7 +84,7 @@ class _FullScreenAlarmOverlayState extends State<FullScreenAlarmOverlay>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.existingAlarm == null ? '알람 추가' : '알람 수정',
+                        widget.existingAlarm == null ? '알림 추가' : '알림 수정',
                         style: const TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       IconButton(
@@ -103,7 +103,7 @@ class _FullScreenAlarmOverlayState extends State<FullScreenAlarmOverlay>
                         TextField(
                           controller: _titleController,
                           decoration: const InputDecoration(
-                            labelText: "알람 제목",
+                            labelText: "알림 제목",
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -115,7 +115,7 @@ class _FullScreenAlarmOverlayState extends State<FullScreenAlarmOverlay>
                         ),
                         const SizedBox(height: 12),
                         SwitchListTile(
-                          title: const Text("알람 활성화"),
+                          title: const Text("알림 활성화"),
                           value: _isActive,
                           onChanged: (value) {
                             setState(() {
