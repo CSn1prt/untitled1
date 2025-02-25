@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:untitled1/screens/user_info.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'favorites_list_screen.dart';
 
 class FullScreenSettingsOverlay extends StatefulWidget {
   final VoidCallback onClose;
@@ -74,13 +78,13 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                   child: ListView(
                     children: [
                       ListTile(
-                        title: const Text('계정 정보'),
-                        onTap: () {
+                        title: const Text('기기 설정 권한'),
+                        onTap: () async {
                           widget.onClose();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const UserInfoScreen()),
-                          );
+
+
+                          await openAppSettings();
+
                         },
                       ),
                       SwitchListTile(
@@ -90,6 +94,61 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                           // 다크 모드 변경 로직
                         },
                       ),
+
+                      ListTile(
+                        title: const Text('즐겨찾기'),
+                        trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+                        onTap: () {
+                          // Navigate to the LoadingScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FavoritesListScreen()),
+                          );
+                        },
+                      ),
+
+                      ListTile(
+                        title: const Text('고객 센터'),
+                        trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
+                        onTap: () async {
+                          final Uri telUri = Uri(
+                            scheme: 'tel',
+                            path: '1599-2745', // 실제 고객센터 전화번호로 변경하세요.
+                          );
+                          if (await canLaunchUrl(telUri)) {
+                            await launchUrl(telUri);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("전화 연결을 할 수 없습니다.")),
+                            );
+                          }
+                        },
+                      ),
+
+                      TextButton(
+                        onPressed: () {
+                          // 웹페이지로 이동
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const WebViewScreen(url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EB%B3%B4%ED%98%B8%EB%B2%95', onLoadingChanged: false,),
+                          //   ),
+                          // );
+                        },
+                        child: const Text(
+                          '개인정보처리방침 보기',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blue, // 링크처럼 보이도록 설정
+                          ),
+                        ),
+                      ),
+
+                      //const SizedBox(height: 16),
+                      //
+                      //
+                      // Now this is fine
+                      //
                       // 추가 옵션들을 여기에 추가...
                     ],
                   ),

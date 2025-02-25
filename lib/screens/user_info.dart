@@ -62,7 +62,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         const SizedBox(height: 20),
                         // 사용자 이름 (현재는 고정값, 필요 시 동적으로 변경 가능)
                         const Text(
-                          'AAA',
+                          '홍길동',
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
