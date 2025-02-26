@@ -15,7 +15,7 @@ dependencies:
   path_provider: ^2.1.0
   webview_flutter: ^4.10.0
   webview_flutter_android: ^4.3.1
-  cupertino_icons: ^1.0.8
+  flutter_feather_icons: ^2.0.0+1
   flutter_inappwebview: ^6.1.5
   url_launcher: ^6.1.7  # 최신 버전 확인 후 사용
   google_fonts: ^6.2.1
@@ -44,9 +44,9 @@ flutter:
 
 flutter_native_splash:
   color: "#ffffff"  # 배경 색상
-  image: assets/images/exona_logo.png  # 스플래시 화면에 사용할 이미지
+  image: assets/images/splash_background.png  # 스플래시 화면에 사용할 이미지
   android_12:
-    image: assets/images/exona_logo.png  # Android 12 이상에서 사용할 이미지
+    image: assets/images/splash_background.png  # Android 12 이상에서 사용할 이미지
     icon_background_color: "#ffffff"
   android: true
   ios: true

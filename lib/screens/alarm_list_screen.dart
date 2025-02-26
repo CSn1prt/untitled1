@@ -58,14 +58,18 @@ class _FullScreenAlarmListOverlayState
   void _addAlarm() {
     setState(() {
       alarms.add(
-        Alarm(title: '새 알람', time: '09:00 AM', isActive: true),
+        Alarm(title: '이비인후과 검진 결과가 나왔습니다.', time: '09:00 AM', isActive: true),
       );
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+
     return SlideTransition(
+
       position: _animation,
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -147,14 +151,14 @@ class _FullScreenAlarmListOverlayState
                 ),
               ),
               // FloatingActionButton을 오버레이 상단에 배치하여 알람 추가 기능 제공
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: FloatingActionButton(
-                  onPressed: _addAlarm,
-                  child: const Icon(Icons.add),
-                ),
-              ),
+              // Positioned(
+              //   bottom: 77,
+              //   right: 16,
+              //   child: FloatingActionButton(
+              //     onPressed: _addAlarm,
+              //     child: const Icon(Icons.add),
+              //   ),
+              // ),
             ],
           ),
         ),

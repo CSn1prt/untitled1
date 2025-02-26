@@ -38,12 +38,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 appBar: AppBar(
                   title: const Text('계정 정보'),
                   actions: [
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        // 프로필 편집 화면으로 이동하는 로직 추가
-                      },
-                    ),
+                    // IconButton(
+                    //   icon: const Icon(Icons.edit),
+                    //   onPressed: () {
+                    //     // 프로필 편집 화면으로 이동하는 로직 추가
+                    //   },
+                    // ),
                   ],
                 ),
                 body: Center(

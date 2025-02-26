@@ -66,27 +66,28 @@ class _MainScreenState extends State<MainScreen> {
           return Stack(
               clipBehavior: Clip.none, // 메뉴 박스 밖의 위치도 표시
               children: [
-                Positioned(
-                  top: -38, // 컨테이너 위쪽 밖으로 빼내기 위해 음수 값 사용
-                  right: 16, // 위치는 필요에 따라 조정
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(
-                        Icons.close,
-                        size: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+                // 메뉴 박스 바깥의 x 버튼
+                // Positioned(
+                //   top: -38, // 컨테이너 위쪽 밖으로 빼내기 위해 음수 값 사용
+                //   right: 16, // 위치는 필요에 따라 조정
+                //   child: InkWell(
+                //     onTap: () {
+                //       Navigator.pop(context);
+                //     },
+                //     child: Container(
+                //       decoration: const BoxDecoration(
+                //         color: Colors.grey,
+                //         shape: BoxShape.circle,
+                //       ),
+                //       padding: const EdgeInsets.all(8),
+                //       child: const Icon(
+                //         Icons.close,
+                //         size: 20,
+                //         color: Colors.white,
+                //       ),
+                //     ),
+                //   ),
+                // ),
            Padding(
             // 네비게이션 바 높이만큼의 하단 여백 추가
             padding: EdgeInsets.only(
@@ -110,9 +111,10 @@ class _MainScreenState extends State<MainScreen> {
 
 
 
+
                   // 닫기 버튼을 ListTile 형태로 커스터마이징
                   ListTile(
-                    leading: const Icon(Icons.close, color: Colors.red),
+                    leading: const Icon(Icons.close, color: Colors.black),
                     title: const Text(
                       '닫기',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -125,6 +127,7 @@ class _MainScreenState extends State<MainScreen> {
                       Navigator.pop(context);
                     },
                   ),
+             const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
 
                   ListTile(
                     title: const Text('진료/검사 예약'),
@@ -199,7 +202,7 @@ class _MainScreenState extends State<MainScreen> {
                       );
                     },
                   ),
-                  const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
+
 
 
 
