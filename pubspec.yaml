@@ -19,6 +19,7 @@ dependencies:
   flutter_inappwebview: ^6.1.5
   url_launcher: ^6.1.7  # 최신 버전 확인 후 사용
   google_fonts: ^6.2.1
+  flutter_svg: ^1.0.3
 
   flutter_local_notifications: ^18.0.1
 
