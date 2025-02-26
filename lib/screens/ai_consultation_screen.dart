@@ -31,7 +31,7 @@ class _InlineWebViewState extends State<InlineWebView> {
 }
 
 class AIConsultationScreen extends StatefulWidget {
-  const AIConsultationScreen({super.key});
+  const AIConsultationScreen({Key? key}) : super(key: key);
 
   @override
   State<AIConsultationScreen> createState() =>
@@ -40,29 +40,35 @@ class AIConsultationScreen extends StatefulWidget {
 
 class _TreatmentReservationScreenState extends State<AIConsultationScreen> {
   // 0: 방문병원, 1: 진료예약
-  int _selectedIndex = 0;
+  int _selectedButtonIndex = 0;
 
   Widget _buildCustomButton({required String title, required int index}) {
     // 선택된 버튼은 purple, 나머지는 grey
-    Color buttonColor = _selectedIndex == index ? Colors.purple : Colors.grey;
+    Color buttonColor = (_selectedButtonIndex == index) ? Colors.purple : Colors.grey;
     return InkWell(
       onTap: () {
         setState(() {
-          _selectedIndex = index;
+          _selectedButtonIndex = index;
         });
       },
       child: Container(
-        width: 180,
-        height: 40,
+        width: 180, // 버튼 크기 조절
+        height: 44,
         decoration: BoxDecoration(
-          color: buttonColor,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(0),
+          border: Border(
+            bottom: BorderSide(
+              color: buttonColor, // 밑줄 색상
+              width: 4, // 밑줄 두께
+            ),
+          ),
         ),
         alignment: Alignment.center,
         child: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: buttonColor, // 텍스트 색상도 동일하게 적용
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -127,7 +133,7 @@ class _TreatmentReservationScreenState extends State<AIConsultationScreen> {
                     );
                   } else {
                     // 로그인 된 경우: 선택된 버튼에 따라 지정된 웹뷰 화면 표시
-                    String url = _selectedIndex == 0
+                    String url = _selectedButtonIndex == 0
                         ? "https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90"
                         : "http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html";
                     return InlineWebView(url: url);
