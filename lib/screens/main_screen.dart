@@ -44,11 +44,16 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _screens.addAll([
+
       WebViewScreen(
         url: 'http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app.html',
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
-      const TreatmentReservationScreen(),
+      WebViewScreen(
+        url: "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_reservation_1.html"
+,
+        onLoadingChanged: _setLoadingState, // 콜백 전달
+      ),
       //'진료예약'으로 바뀔 예정
       const HomeScreen(),
       const UserInfoScreen()

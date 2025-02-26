@@ -19,7 +19,7 @@ class AppointmentMainScreen extends StatelessWidget {
               _buildCustomButton(
                 context,
                 title: '진료예약',
-                color: Colors.purple,
+                color: Colors.black12,
                 onTap: () {
                   Navigator.push(
                     context,

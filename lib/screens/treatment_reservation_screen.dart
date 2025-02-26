@@ -134,8 +134,8 @@ class _TreatmentReservationScreenState extends State<TreatmentReservationScreen>
                   } else {
                     // 로그인 된 경우: 선택된 버튼에 따라 지정된 웹뷰 화면 표시
                     String url = _selectedButtonIndex == 0
-                        ? "http://210.121.223.5:11101/HospitalInfo/SD?DHM=0&CodeSeq=1"
-                        : "http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html";
+                        ? "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_reservation_1.html"
+                        : "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_reservation_2.html";
                     return InlineWebView(url: url);
                   }
                 }

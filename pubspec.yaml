@@ -20,7 +20,7 @@ dependencies:
   url_launcher: ^6.1.7  # 최신 버전 확인 후 사용
   google_fonts: ^6.2.1
   flutter_svg: ^1.0.3
-
+  flutter_native_splash: ^2.4.4
   flutter_local_notifications: ^18.0.1
 
 
@@ -44,11 +44,4 @@ flutter:
     - assets/images/splash_background.png
     - assets/images/
 
-flutter_native_splash:
-  color: "#ffffff"  # 배경 색상
-  image: assets/images/Android_Compact-2.png  # 스플래시 화면에 사용할 이미지
-  android_12:
-    image: assets/images/Android_Compact-2.png  # Android 12 이상에서 사용할 이미지
-    icon_background_color: "#ffffff"
-  android: true
-  ios: true
+

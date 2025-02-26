@@ -134,8 +134,8 @@ class _TreatmentReservationScreenState extends State<AIConsultationScreen> {
                   } else {
                     // 로그인 된 경우: 선택된 버튼에 따라 지정된 웹뷰 화면 표시
                     String url = _selectedButtonIndex == 0
-                        ? "https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90"
-                        : "http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html";
+                        ? "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_ai_1.html"
+                        : "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_ai_2.html";
                     return InlineWebView(url: url);
                   }
                 }
