@@ -41,6 +41,7 @@ flutter:
     - assets/images/resized_icon.png
     - assets/images/exona_logo.png
     - assets/images/splash_background.png
+    - assets/images/
 
 flutter_native_splash:
   color: "#ffffff"  # 배경 색상

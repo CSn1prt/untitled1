@@ -38,9 +38,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
     );
     },// 로고 아이콘 여백 조절
         child: Image.asset(
-          'assets/images/exona_logo.png',  // 로고 이미지 경로
-          width: 28,  // 추천 크기
-          height: 28, // 추천 크기
+          'assets/images/exona_logo_b_a.png',  // 로고 이미지 경로
+          width: 130,  // 추천 크기
+          height: 14, // 추천 크기
           fit: BoxFit.contain, // 크기 조절
         ),
       ),

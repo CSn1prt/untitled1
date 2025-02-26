@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/appointment_main_screen.dart';
+import 'package:untitled1/screens/treatment_reservation_screen.dart';
 import 'package:untitled1/screens/user_info.dart';
 //import '../screens/webview_screen.dart';
 import 'menu_screen.dart';
@@ -46,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
         url: 'http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_group1.html',
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
-      const AppointmentMainScreen(),
+      const TreatmentReservationScreen(),
       //'진료예약'으로 바뀔 예정
       const HomeScreen(),
       const UserInfoScreen()
