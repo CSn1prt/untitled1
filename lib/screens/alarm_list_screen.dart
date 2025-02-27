@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../app_constants.dart';
 import '../models/alarm.dart';
 
 class FullScreenAlarmListOverlay extends StatefulWidget {
@@ -27,7 +28,7 @@ class _FullScreenAlarmListOverlayState
   @override
   void initState() {
     super.initState();
-    // 초기 알람 목록을 복사하여 상태 변수에 저장합니다.
+    // 초기 알람 목록을 복사하여 상태 변수에 저장.
     alarms = List.from(widget.initialAlarms);
 
     _controller = AnimationController(
@@ -54,14 +55,6 @@ class _FullScreenAlarmListOverlayState
     });
   }
 
-  // 새 알람을 추가하는 메서드 (여기서는 기본값 사용)
-  void _addAlarm() {
-    setState(() {
-      alarms.add(
-        Alarm(title: '이비인후과 검진 결과가 나왔습니다.', time: '09:00 AM', isActive: true),
-      );
-    });
-  }
 
 
 
@@ -88,7 +81,7 @@ class _FullScreenAlarmListOverlayState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            '알람 목록',
+                            AppConstants.alarmTitle,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                           IconButton(
@@ -134,7 +127,7 @@ class _FullScreenAlarmListOverlayState
                         children: [
                           TextButton(
                             onPressed: _closeOverlay,
-                            child: const Text("취소"),
+                            child: const Text(AppConstants.close),
                           ),
                           const SizedBox(width: 8),
                           TextButton(
@@ -142,7 +135,7 @@ class _FullScreenAlarmListOverlayState
                               widget.onSave(alarms);
                               _closeOverlay();
                             },
-                            child: const Text("저장"),
+                            child: const Text(AppConstants.save),
                           ),
                         ],
                       ),

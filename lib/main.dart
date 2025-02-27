@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:untitled1/screens/Lower_navigation_bar.dart';
 import 'package:untitled1/screens/app_bar_screen.dart';
+import 'app_constants.dart';
 import 'screens/webview_screen.dart';
 import 'screens/login_screen.dart';
 import 'models/login_state.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Visual Agent',
+      title: AppConstants.appTitle,
       home: SplashScreen(),
     );
   }

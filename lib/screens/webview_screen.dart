@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled1/app_constants.dart';
 import 'package:untitled1/screens/settings_screen.dart';
 import '../repositories/favorites_repository.dart';
 import 'Lower_navigation_bar.dart';
@@ -150,7 +151,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     MaterialPageRoute(
                       builder: (context) => WebViewScreen(
                         url:
-                        'https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90',
+                            AppConstants.aiChatUrl,
                         onLoadingChanged: _setLoadingState,
                         showFloatingButton: false, // 챗봇 웹뷰에서는 버튼 숨김
                       ),
@@ -175,7 +176,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                           MaterialPageRoute(
                             builder: (context) => WebViewScreen(
                               url:
-                              'https://exona.kr/aichat/aichat_sjh01.html?tenantid=sjh01&tenantname=%EC%9D%B8%EC%B2%9C%EC%84%B8%EC%A2%85%EB%B3%91%EC%9B%90',
+                              AppConstants.aiChatUrl,
                               onLoadingChanged: _setLoadingState,
                               showFloatingButton: false, // 챗봇 웹뷰에서는 버튼 숨김
                             ),
@@ -188,7 +189,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         child: Row(
                           children: [
                             const Text(
-                              '안녕하세요! 무엇을 도와드릴까요?😊',
+                              AppConstants.speechBubbleMessage,
                               style: TextStyle(fontSize: 12, color: Colors.black),
                             ),
                             const SizedBox(width: 4),
@@ -262,7 +263,7 @@ class WaitingScreen extends StatelessWidget {
             CircularProgressIndicator(),
             SizedBox(height: 20),
             Text(
-              '잠시만 기다려주세요...',
+              AppConstants.pleaseWait,
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ],

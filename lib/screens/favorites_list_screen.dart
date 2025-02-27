@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/repositories/favorites_repository.dart';
 
+import '../app_constants.dart';
+
 class FavoritesListScreen extends StatefulWidget {
   @override
   _FavoritesListScreenState createState() => _FavoritesListScreenState();
@@ -32,10 +34,10 @@ class _FavoritesListScreenState extends State<FavoritesListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('추가된 즐겨찾기 목록'),
+        title: Text(AppConstants.favoritesTitle),
       ),
       body: _favorites.isEmpty
-          ? Center(child: Text('추가하신 즐겨찾기가 없습니다.'))
+          ? Center(child: Text(AppConstants.noFavorites))
           : ListView.builder(
         itemCount: _favorites.length,
         itemBuilder: (context, index) {

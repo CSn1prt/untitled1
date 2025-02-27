@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/app_constants.dart';
 import '../models/login_state.dart';
 import 'login_screen.dart';
 
@@ -36,7 +37,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               // (이 부분에서 실제 사용자 이름이나 다른 정보도 함께 불러올 수 있음)
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('계정 정보'),
+                  title: const Text(AppConstants.accountInfoTitle),
                   actions: [
                     // IconButton(
                     //   icon: const Icon(Icons.edit),
@@ -57,12 +58,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         const CircleAvatar(
                           radius: 60,
                           backgroundImage:
-                          NetworkImage('https://via.placeholder.com/150'),
+                          NetworkImage(AppConstants.userAvatarImageUrl),
                         ),
                         const SizedBox(height: 20),
                         // 사용자 이름 (현재는 고정값, 필요 시 동적으로 변경 가능)
                         const Text(
-                          '홍길동',
+                          AppConstants.userName,
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
@@ -79,7 +80,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           onPressed: () {
                             // 프로필 편집 화면으로 이동하는 로직
                           },
-                          child: const Text('프로필 편집'),
+                          child: const Text(AppConstants.editProfileButton),
                         ),
                         const SizedBox(height: 10),
                         // 로그아웃 버튼
@@ -87,7 +88,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           onPressed: () {
                             _showLogoutConfirmationDialog(context);
                           },
-                          child: const Text('로그아웃'),
+                          child: const Text(AppConstants.logout),
                         ),
                       ],
                     ),
@@ -116,14 +117,14 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('로그아웃'),
-          content: const Text('정말로 로그아웃 하시겠습니까?'),
+          title: const Text(AppConstants.logout),
+          content: const Text(AppConstants.logoutConfirmationButton),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // 다이얼로그 닫기
               },
-              child: const Text('취소'),
+              child: const Text(AppConstants.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -134,7 +135,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
-              child: const Text('로그아웃'),
+              child: const Text(AppConstants.logout),
             ),
           ],
         );

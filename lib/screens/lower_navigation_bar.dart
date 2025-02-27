@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/app_constants.dart';
 import 'menu_screen.dart';
 import 'settings_screen.dart';
 import 'app_bar_screen.dart';
@@ -15,26 +16,31 @@ class CustomBottomNavigationBar extends StatelessWidget {
     required this.onItemTapped,
   }) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
+
+
+
           icon: Icon(Icons.home),
-          label: '홈',
+          label: AppConstants.home,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_month_sharp),
-          label: '진료예약',
+          label: AppConstants.menu,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.menu),
-          label: '메뉴',
+          label: AppConstants.treatment,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: '내 정보',
+          label: AppConstants.userInfo,
         ),
       ],
       currentIndex: selectedIndex,

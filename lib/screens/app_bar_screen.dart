@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled1/screens/settings_screen.dart';
+import '../app_constants.dart';
 import '../models/alarm.dart';
 import 'alarm_list_screen.dart';
 import 'main_screen.dart';
@@ -28,7 +29,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leadingWidth: 130, // leading 영역의 너비를 지정
+      leadingWidth: 130, // leading 영역의 너비를 지정 (좌측 로고 사이즈 조정용)
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
     child: InkWell(
@@ -55,7 +56,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: TextField(
           controller: _searchController,
           decoration: const InputDecoration(
-            hintText: '검색하기',
+            hintText: AppConstants.searchHint,
             border: InputBorder.none,
           ),
           autofocus: true,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'webview_screen.dart'; // 프로젝트 내 WebViewScreen 경로를 import
+import '../screens/webview_screen.dart'; // 프로젝트 내 WebViewScreen 경로를 import
 
 class OneScreen extends StatelessWidget {
   const OneScreen({Key? key}) : super(key: key);

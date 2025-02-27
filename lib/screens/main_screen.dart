@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/screens/appointment_main_screen.dart';
-import 'package:untitled1/screens/one_screen.dart';
-import 'package:untitled1/screens/treatment_reservation_screen.dart';
+import 'package:untitled1/unused_screens/appointment_main_screen.dart';
+import 'package:untitled1/unused_screens/one_screen.dart';
+import 'package:untitled1/unused_screens/treatment_reservation_screen.dart';
 import 'package:untitled1/screens/user_info.dart';
 //import '../screens/webview_screen.dart';
+import '../app_constants.dart';
 import 'menu_screen.dart';
 import 'settings_screen.dart';
 import 'app_bar_screen.dart';
@@ -46,12 +47,11 @@ class _MainScreenState extends State<MainScreen> {
     _screens.addAll([
 
       WebViewScreen(
-        url: 'http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app.html',
+        url: AppConstants.homeScreenUrl,
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
       WebViewScreen(
-        url: "http://210.121.223.5:11101/Demo/Pages/HealthInfo/index_app_reservation_1.html"
-,
+        url: AppConstants.treatmentReservationScreenUrl,
         onLoadingChanged: _setLoadingState, // 콜백 전달
       ),
       //'진료예약'으로 바뀔 예정
@@ -60,8 +60,6 @@ class _MainScreenState extends State<MainScreen> {
     ]);
   }
 
-  // Titles for each tab
-  final List<String> _titles = ['홈', '진료예약', '메뉴', '내 정보'];
 
   void _onItemTapped(int index) {
     if (index == 2) { // 메뉴 버튼에 해당하는 인덱스
@@ -73,30 +71,9 @@ class _MainScreenState extends State<MainScreen> {
           return Stack(
               clipBehavior: Clip.none, // 메뉴 박스 밖의 위치도 표시
               children: [
-                // 메뉴 박스 바깥의 x 버튼
-                // Positioned(
-                //   top: -38, // 컨테이너 위쪽 밖으로 빼내기 위해 음수 값 사용
-                //   right: 16, // 위치는 필요에 따라 조정
-                //   child: InkWell(
-                //     onTap: () {
-                //       Navigator.pop(context);
-                //     },
-                //     child: Container(
-                //       decoration: const BoxDecoration(
-                //         color: Colors.grey,
-                //         shape: BoxShape.circle,
-                //       ),
-                //       padding: const EdgeInsets.all(8),
-                //       child: const Icon(
-                //         Icons.close,
-                //         size: 20,
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+
            Padding(
-            // 네비게이션 바 높이만큼의 하단 여백 추가
+            // 네비게이션 바 높이만큼의 하단 여백 추가시 bottom: ... 사용
             padding: EdgeInsets.only(
               // bottom: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
             ),
@@ -123,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                   ListTile(
                     leading: const Icon(Icons.close, color: Colors.black),
                     title: const Text(
-                      '닫기',
+                      AppConstants.close,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     tileColor: Colors.grey[100],
@@ -137,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
              const Divider(), // 메뉴와 닫기 버튼 사이에 구분선 추가
 
                   ListTile(
-                    title: const Text('진료/검사 예약'),
+                    title: const Text(AppConstants.menuText1),
                     onTap: () {
                       Navigator.pop(context); // 바텀 시트 닫기
                       setState(() {
@@ -147,7 +124,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: 'http://210.121.223.5:11101/Main?PatientType=N',
+                            url: AppConstants.menuUrl1,
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -155,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
                     },
                   ),
                   ListTile(
-                    title: const Text('진료상담/병원안내'),
+                    title: const Text(AppConstants.menuText2),
                     onTap: () {
                       Navigator.pop(context); // 바텀 시트 닫기
                       setState(() {
@@ -165,7 +142,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: "http://210.121.223.5:11101/Error/001?ReturnUrl=%2FHospitalInfo%2FSD%3FDHM%3D0%26CodeSeq%3D1",
+                            url: AppConstants.menuUrl2,
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -174,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   // 추가 메뉴 항목들...
                   ListTile(
-                    title: const Text('건강검진 예약'),
+                    title: const Text(AppConstants.menuText3),
                     onTap: () {
                       Navigator.pop(context); // 바텀 시트 닫기
                       setState(() {
@@ -184,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: 'http://210.121.223.5:11101/Demo/Pages/Treatment/BaseAuth.html',
+                            url: AppConstants.menuUrl3,
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -192,7 +169,7 @@ class _MainScreenState extends State<MainScreen> {
                     },
                   ),
                   ListTile(
-                    title: const Text('증명서 발급'),
+                    title: const Text(AppConstants.menuText4),
                     onTap: () {
                       Navigator.pop(context); // 바텀 시트 닫기
                       setState(() {
@@ -202,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                       _navigatorKeys[2].currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => WebViewScreen(
-                            url: "https://clinic.mycerti.com/",
+                            url: AppConstants.menuUrl4,
                             onLoadingChanged: _setLoadingState,
                           ),
                         ),
@@ -232,7 +209,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 로딩 중일 때는 SplashScreen만 표시
+    // 로딩 중일 때는 WaitingScreen만 표시
     if (_isLoading && _selectedIndex == 0) {
       return WaitingScreen();
     }

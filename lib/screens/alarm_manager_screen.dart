@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../app_constants.dart';
 import '../models/alarm.dart';
 import '../screens/alarm_list_screen.dart'; // 오버레이 위젯 경로에 맞게 수정
 
@@ -64,7 +65,7 @@ class _AlarmManagerScreenState extends State<AlarmManagerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("알람 관리"),
+        title: const Text(AppConstants.alarmManagement),
       ),
       body: ListView.builder(
         itemCount: alarms.length,

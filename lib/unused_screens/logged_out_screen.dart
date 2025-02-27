@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart'; // Import your LoginScreen
+import '../screens/login_screen.dart'; // Import your LoginScreen
 
 class LoggedOutScreen extends StatelessWidget {
   const LoggedOutScreen({Key? key}) : super(key: key);

@@ -4,6 +4,7 @@ import 'package:untitled1/screens/alarm_manager_screen.dart';
 import 'package:untitled1/screens/user_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../app_constants.dart';
 import 'favorites_list_screen.dart';
 
 class FullScreenSettingsOverlay extends StatefulWidget {
@@ -60,7 +61,7 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        '설정',
+                        AppConstants.settings,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       IconButton(
@@ -79,7 +80,7 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                   child: ListView(
                     children: [
                       ListTile(
-                        title: const Text('기기 설정 권한'),
+                        title: const Text(AppConstants.deviceAccess),
                         onTap: () async {
                           widget.onClose();
 
@@ -89,7 +90,7 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                         },
                       ),
                       SwitchListTile(
-                        title: const Text('다크 모드'),
+                        title: const Text(AppConstants.darkMode),
                         value: false, // 실제 상태 값 연결 필요
                         onChanged: (value) {
                           // 다크 모드 변경 로직
@@ -97,10 +98,10 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                       ),
 
                       ListTile(
-                        title: const Text('즐겨찾기'),
+                        title: const Text(AppConstants.favorites),
                         trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
                         onTap: () {
-                          // Navigate to the LoadingScreen
+                          //즐겨찾기 관리화면으로 이동
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => FavoritesListScreen()),
@@ -110,10 +111,10 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                       ),
 
                       ListTile(
-                        title: const Text('알람 관리'),
+                        title: const Text(AppConstants.alarmManagement),
                         trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
                         onTap: () {
-                          // Navigate to the LoadingScreen
+                          // 알림관리화면으로 이동
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => AlarmManagerScreen()),
@@ -123,18 +124,18 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                       ),
 
                       ListTile(
-                        title: const Text('고객 센터'),
+                        title: const Text(AppConstants.customerCenter),
                         trailing: const Icon(Icons.arrow_forward_ios), // Optional: Add a navigation icon
                         onTap: () async {
                           final Uri telUri = Uri(
                             scheme: 'tel',
-                            path: '1599-2745', // 실제 고객센터 전화번호로 변경하세요.
+                            path: AppConstants.phone, // 실제 고객센터 전화번호로 변경하세요.
                           );
                           if (await canLaunchUrl(telUri)) {
                             await launchUrl(telUri);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("전화 연결을 할 수 없습니다.")),
+                              const SnackBar(content: Text(AppConstants.phoneCallFailMessage)),
                             );
                           }
                         },
@@ -151,7 +152,7 @@ class _FullScreenSettingsOverlayState extends State<FullScreenSettingsOverlay>
                           // );
                         },
                         child: const Text(
-                          '개인정보처리방침 보기',
+                          AppConstants.privacyPolicy,
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: Colors.blue, // 링크처럼 보이도록 설정
