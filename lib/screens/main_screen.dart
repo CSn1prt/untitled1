@@ -234,7 +234,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     // 로딩 중일 때는 SplashScreen만 표시
     if (_isLoading && _selectedIndex == 0) {
-      return SplashScreen();
+      return WaitingScreen();
     }
 
     return Scaffold(

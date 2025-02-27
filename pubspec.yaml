@@ -28,11 +28,24 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  flutter_native_splash: ^2.3.3
+
   flutter_launcher_icons: ^0.14.3
 
 flutter_icons:
   image_path: "assets/images/exona_logo.png" # 원하는 아이콘 경로
+  android: true
+  ios: true
+
+# 스플래시 화면 설정 추가
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/splash_blank.png
+  fullscreen: true
+  android_12:
+    image: assets/images/splash_blank.png
+    icon_background_color: "#ffffff"
+  android_gravity: center
+  ios_content_mode: scaleAspectFill
   android: true
   ios: true
 
@@ -42,6 +55,5 @@ flutter:
     - assets/images/resized_icon.png
     - assets/images/exona_logo.png
     - assets/images/splash_background.png
+    - assets/images/android-compact-2.png  # 추가된 이미지 경로
     - assets/images/
-
-
